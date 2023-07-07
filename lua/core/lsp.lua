@@ -19,7 +19,13 @@ require('lspconfig').lua_ls.setup({
         callSnippet = "Replace",
         workspace = { checkThirdParty = false },
         telemetry = { enable = false },
-      }
+      },
+      diagnostics = {
+        globals = {
+          'vim',
+          'require'
+        }
+      },
     }
   }
 })
