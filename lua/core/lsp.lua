@@ -16,7 +16,9 @@ require('lspconfig').lua_ls.setup({
   settings = {
     Lua = {
       completion = {
-        callSnippet = "Replace"
+        callSnippet = "Replace",
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
       }
     }
   }
