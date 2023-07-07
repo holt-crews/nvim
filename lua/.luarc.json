@@ -1,0 +1,21 @@
+{
+    "workspace.library": [
+        "/home/holt/.local/share/nvim/lazy/neodev.nvim/types/stable",
+        "/usr/share/nvim/runtime/lua",
+        "/home/holt/.local/share/nvim/lazy/mason.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/lazy.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/nvim-treesitter/lua",
+        "/home/holt/.local/share/nvim/lazy/lsp-zero.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/neodev.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/LuaSnip/lua",
+        "/home/holt/.local/share/nvim/lazy/nvim-treesitter-textobjects/lua",
+        "/home/holt/.local/share/nvim/lazy/telescope.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/nvim-lspconfig/lua",
+        "/home/holt/.local/share/nvim/lazy/nvim-cmp/lua",
+        "/home/holt/.local/share/nvim/lazy/plenary.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/mason-lspconfig.nvim/lua",
+        "/home/holt/.local/share/nvim/lazy/cmp-nvim-lsp/lua",
+        "/home/holt/.config/nvim/lua",
+        "${3rd}/luv/library"
+    ]
+}
