@@ -41,6 +41,8 @@ return {
       init = function()
         vim.g.rustfmt_autosave = 1
       end
-    }
+    },
+    -- prettify
+    { 'onsails/lspkind.nvim' }
   }
 }
