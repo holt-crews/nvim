@@ -42,4 +42,4 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "88"
 
-vim.opt.whichwrap:append "<>[]hl"
+vim.opt.whichwrap:append "<>[]"
