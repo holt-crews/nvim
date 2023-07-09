@@ -51,8 +51,8 @@ return {
                 lualine_a = { 'mode' },
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
                 lualine_c = { 'buffers' },
-                lualine_x = { 'fileformat', 'filetype' },
-                lualine_y = { 'progress' },
+                lualine_x = { 'fileformat' },
+                lualine_y = { 'filetype' },
                 lualine_z = { 'location' }
             }
         },
