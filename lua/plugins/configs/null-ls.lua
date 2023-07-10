@@ -16,7 +16,6 @@ local lSsources = {
       "md",
       "txt",
     },
-    only_local = "node_modules/.bin",
   }),
   null_ls.builtins.formatting.stylua.with({
     filetypes = {
