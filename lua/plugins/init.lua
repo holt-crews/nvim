@@ -189,9 +189,9 @@ return {
     end,
   },
   "NvChad/nvim-colorizer.lua",
-  {
-    "m4xshen/hardtime.nvim",
-    opts = {},
-  },
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   opts = {},
+  -- },
   { import = "plugins.plugs" },
 }
