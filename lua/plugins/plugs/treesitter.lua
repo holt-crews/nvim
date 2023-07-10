@@ -1,7 +1,7 @@
 -- https://www.lazyvim.org/plugins/treesitter
 
 return {
-  'nvim-treesitter/nvim-treesitter',
+  "nvim-treesitter/nvim-treesitter",
   version = false,
   build = ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
@@ -18,7 +18,7 @@ return {
   cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo", "TSUpdateSync" },
   keys = {
     { "<c-space>", desc = "Increment selection" },
-    { "<bs>",      desc = "Decrement selection", mode = "x" },
+    { "<bs>", desc = "Decrement selection", mode = "x" },
   },
   opts = {
     highlight = { enable = true },
