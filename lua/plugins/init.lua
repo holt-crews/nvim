@@ -190,7 +190,7 @@ return {
       require("plugins.configs.null-ls")
     end,
   },
-  "NvChad/nvim-colorizer.lua",
+  "norcalli/nvim-colorizer.lua",
   -- {
   --   "m4xshen/hardtime.nvim",
   --   opts = {},
