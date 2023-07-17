@@ -15,8 +15,9 @@ vim.keymap.set("n", "<leader>gc", builtin.git_commits, {})
 vim.keymap.set("n", "<leader>ht", builtin.help_tags, {})
 
 -- Undotree
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+-- vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
+vim.keymap.set("n", "<leader>bd", '<cmd> %bdelete|edit #|normal `" <CR>')
 -- TODO: figure out vim fugitive (Git)
 -- vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 
