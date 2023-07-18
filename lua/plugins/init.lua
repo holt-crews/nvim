@@ -195,6 +195,24 @@ return {
       require("plugins.configs.null-ls")
     end,
   },
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
+  {
+    "mhinz/vim-startify",
+    config = function()
+      vim.g.indent_blankline_filetype_exclude = { "lspinfo", "packer", "checkhealth", "help", "man", "startify", "" }
+      vim.g.startify_custom_header = {
+        [[                                  __]],
+        [[     ___     ___    ___   __  __ /\_\    ___ ___]],
+        [[    / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\]],
+        [[   /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \]],
+        [[   \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+        [[    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+      }
+    end,
+  },
   -- "norcalli/nvim-colorizer.lua",
   -- {
   --   "m4xshen/hardtime.nvim",

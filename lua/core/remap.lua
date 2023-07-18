@@ -21,6 +21,12 @@ vim.keymap.set("n", "<leader>bd", '<cmd> %bdelete|edit #|normal `" <CR>')
 -- TODO: figure out vim fugitive (Git)
 -- vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 
+-- vim tmux navigator
+vim.keymap.set("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>")
+vim.keymap.set("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>")
+vim.keymap.set("n", "<C-j>", "<cmd> TmuxNavigateDown<CR>")
+vim.keymap.set("n", "<C-k>", "<cmd> TmuxNavigateUp<CR>")
+
 vim.keymap.set("n", "<Cr>", "o<Esc>")
 -- vim.keymap.set('n', '<S-Cr>', 'O<Esc>')
 
