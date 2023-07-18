@@ -201,6 +201,7 @@ return {
   },
   {
     "mhinz/vim-startify",
+    event = "VimEnter",
     config = function()
       vim.g.indent_blankline_filetype_exclude = { "lspinfo", "packer", "checkhealth", "help", "man", "startify", "" }
       vim.g.startify_custom_header = {
