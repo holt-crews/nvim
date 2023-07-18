@@ -214,7 +214,10 @@ return {
       }
     end,
   },
-  -- "norcalli/nvim-colorizer.lua",
+  {
+    "norcalli/nvim-colorizer.lua",
+    cmd = "ColorizerAttachToBuffer",
+  },
   -- {
   --   "m4xshen/hardtime.nvim",
   --   opts = {},
