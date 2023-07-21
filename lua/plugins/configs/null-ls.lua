@@ -17,11 +17,19 @@ local lSsources = {
       "txt",
     },
   }),
+
   null_ls.builtins.formatting.stylua.with({
     filetypes = {
       "lua",
     },
     args = { "--indent-width", "2", "--indent-type", "Spaces", "-" },
+  }),
+
+  -- might require some additional setup/installation: https://github.com/disrupted/blackd-client
+  null_ls.builtins.formatting.blackd.with({
+    filetypes = {
+      "python",
+    },
   }),
 }
 

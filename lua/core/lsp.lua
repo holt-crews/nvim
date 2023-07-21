@@ -52,14 +52,42 @@ end
 local servers = {
   -- clangd = {},
   gopls = {},
-  pyright = {},
+  ruff_lsp = {
+    on_attach = function(client, bufnr)
+      on_attach(client, bufnr)
+      client.server_capabilities.hoverProvider = false
+    end,
+  },
+  pyright = {
+    settings = {
+      python = {
+        analysis = {
+          useLibraryCodeForTypes = true,
+          diagnosticSeverityOverrides = {
+            reportUnusedVariable = "warning", -- or anything
+          },
+          typeCheckingMode = "basic",
+        },
+      },
+    },
+    capabilities = (function()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+      return capabilities
+    end)(),
+  },
   rust_analyzer = {},
   tsserver = {},
 
   lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
+    settings = {
+      Lua = {
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+        completion = {
+          callSnippet = "Replace",
+        },
+      },
     },
   },
 }
@@ -81,9 +109,9 @@ mason_lspconfig.setup({
 mason_lspconfig.setup_handlers({
   function(server_name)
     require("lspconfig")[server_name].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
+      capabilities = servers[server_name] and servers[server_name]["capabilities"] or capabilities,
+      on_attach = servers[server_name] and servers[server_name]["on_attach"] or on_attach,
+      settings = servers[server_name] and servers[server_name]["settings"] or {},
     })
   end,
 })
@@ -162,3 +190,29 @@ cmp.setup({
     return not (context.in_treesitter_capture("comment") == true or context.in_syntax_group("Comment"))
   end,
 })
+
+-- puts diagnostics in floating mode
+vim.diagnostic.config({
+  underline = true,
+  signs = true,
+  virtual_text = false,
+  float = {
+    show_header = true,
+    source = "if_many",
+    border = "rounded",
+    focusable = false,
+  },
+  update_in_insert = false, -- default to false
+  severity_sort = true, -- default to false
+})
+
+-- add diagnostic symbols
+local function lspSymbol(name, icon)
+  vim.fn.sign_define("DiagnosticSign" .. name, { text = icon, texthl = "LspDiagnosticsSign" .. name })
+end
+lspSymbol("Error", "")
+lspSymbol("Information", "")
+lspSymbol("Hint", "󰌵")
+lspSymbol("Info", "")
+lspSymbol("Warning", "")
+lspSymbol("Warn", "")

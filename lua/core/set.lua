@@ -1,12 +1,3 @@
-local function lspSymbol(name, icon)
-  vim.fn.sign_define("DiagnosticSign" .. name, { text = icon, texthl = "LspDiagnosticsSign" .. name })
-end
-lspSymbol("Error", "")
-lspSymbol("Information", "")
-lspSymbol("Hint", "󰌵")
-lspSymbol("Info", "")
-lspSymbol("Warning", "")
-
 -- vim.opt.nocompatible = true -- disable compatibility to old-time vi
 vim.opt.showmatch = true --  show matching brackets.
 vim.opt.smartcase = true -- case insensitive matching
