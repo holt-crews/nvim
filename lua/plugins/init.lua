@@ -1,5 +1,6 @@
 return {
   "tpope/vim-sleuth",
+  "tpope/vim-surround",
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   { "folke/trouble.nvim",   opts = { icons = false } },
   {
