@@ -1,6 +1,7 @@
 return {
   "tpope/vim-sleuth",
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/trouble.nvim",   opts = { icons = false } },
   {
     "ThePrimeagen/harpoon",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -37,6 +38,7 @@ return {
       end)
     end,
   },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -51,6 +53,13 @@ return {
       extensions = {
         -- :Telescope harpoon marks
         harpoon = {},
+        fzf = {
+          fuzzy = true,                   -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+          -- the default case_mode is "smart_case"
+        },
       },
     },
   },
@@ -145,10 +154,10 @@ return {
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
+      { "j-hui/fidget.nvim",       tag = "legacy", opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim", opts = {} },
+      { "folke/neodev.nvim",       opts = {} },
       {
         "windwp/nvim-autopairs",
         opts = {
@@ -200,27 +209,8 @@ return {
     lazy = false,
   },
   {
-    "mhinz/vim-startify",
-    event = "VimEnter",
-    config = function()
-      vim.g.indent_blankline_filetype_exclude = { "lspinfo", "packer", "checkhealth", "help", "man", "startify", "" }
-      vim.g.startify_custom_header = {
-        [[                                  __]],
-        [[     ___     ___    ___   __  __ /\_\    ___ ___]],
-        [[    / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\]],
-        [[   /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \]],
-        [[   \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-        [[    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
-      }
-    end,
-  },
-  {
     "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerAttachToBuffer",
   },
-  -- {
-  --   "m4xshen/hardtime.nvim",
-  --   opts = {},
-  -- },
   { import = "plugins.plugs" },
 }
