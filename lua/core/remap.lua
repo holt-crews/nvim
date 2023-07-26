@@ -60,10 +60,6 @@ wk.register({
   },
 })
 
--- vim.keymap.set("n", "<leader>fm", function()
---   vim.lsp.buf.format({ async = true })
--- end)
-
 -- folke/trouble.nvim mappings
 local trouble = require("trouble")
 
@@ -109,5 +105,14 @@ wk.register({
       end,
       "Trouble References",
     },
+  },
+})
+
+wk.register({
+  ["[c"] = {
+    function()
+      require("treesitter-context").go_to_context()
+    end,
+    "jump to [c]ontext",
   },
 })
