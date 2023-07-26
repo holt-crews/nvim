@@ -191,6 +191,7 @@ return {
       require("plugins.configs.null-ls")
     end,
   },
+  "nvim-treesitter/nvim-treesitter-context",
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,
