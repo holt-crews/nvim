@@ -21,20 +21,6 @@ return {
       vim.keymap.set("n", "<leader>R", mark.clear_all)
       vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
 
-      -- TODO: probably change these
-      -- vim.keymap.set("n", "<C-h>", function()
-      --   ui.nav_file(1)
-      -- end)
-      -- vim.keymap.set("n", "<C-t>", function()
-      --   ui.nav_file(2)
-      -- end)
-      -- vim.keymap.set("n", "<C-x>", function()
-      --   ui.nav_file(3)
-      -- end)
-      -- vim.keymap.set("n", "<C-s>", function()
-      --   ui.nav_file(4)
-      -- end)
-
       vim.keymap.set("n", "<C-n>", function()
         ui.nav_next()
       end)
@@ -155,7 +141,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
 
       -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { "j-hui/fidget.nvim",       tag = "legacy", opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!

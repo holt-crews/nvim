@@ -93,7 +93,7 @@ local servers = {
 }
 
 -- Setup neovim lua configuration
-require("neodev").setup()
+require("neodev").setup({})
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -203,7 +203,7 @@ vim.diagnostic.config({
     focusable = false,
   },
   update_in_insert = false, -- default to false
-  severity_sort = true, -- default to false
+  severity_sort = true,     -- default to false
 })
 
 -- add diagnostic symbols
