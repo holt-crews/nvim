@@ -1,7 +1,7 @@
 return {
   "tpope/vim-sleuth",
+  "tpope/vim-vinegar",
   { "tpope/vim-surround", event = "BufEnter *.*" },
-  { "tpope/vim-vinegar", event = "BufEnter *.*" },
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   { "folke/trouble.nvim", opts = { icons = false } },
   {
@@ -141,7 +141,10 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
-    event = "BufEnter *.*",
+    event = "BufEnter *.*", -- could fail if file doesn't have an extension
+    config = function()
+      require("plugins.configs.lsp")
+    end,
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { "williamboman/mason.nvim", config = true },
@@ -172,7 +175,10 @@ return {
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
-    event = "BufEnter *.*",
+    event = "InsertEnter",
+    config = function()
+      require("plugins.configs.cmp")
+    end,
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       "L3MON4D3/LuaSnip",
