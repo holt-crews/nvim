@@ -1,9 +1,9 @@
 return {
   "tpope/vim-sleuth",
-  "tpope/vim-surround",
-  "tpope/vim-vinegar",
+  { "tpope/vim-surround", event = "BufEnter *.*" },
+  { "tpope/vim-vinegar", event = "BufEnter *.*" },
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim",   opts = { icons = false } },
+  { "folke/trouble.nvim", opts = { icons = false } },
   {
     "ThePrimeagen/harpoon",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -27,6 +27,7 @@ return {
     end,
   },
   { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  "xiyaowong/telescope-emoji.nvim",
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
@@ -34,6 +35,7 @@ return {
     module = "telescope",
     opts = {
       defaults = {
+        color_devicons = false,
         layout_strategy = "flex",
         layout_config = {
           preview_cutoff = 1,
@@ -43,10 +45,10 @@ return {
         -- :Telescope harpoon marks
         harpoon = {},
         fzf = {
-          fuzzy = true,                   -- false will only do exact matching
+          fuzzy = true, -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
-          override_file_sorter = true,    -- override the file sorter
-          case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+          override_file_sorter = true, -- override the file sorter
+          case_mode = "smart_case", -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
         },
       },
@@ -75,6 +77,7 @@ return {
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
+    event = "BufEnter *.*",
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
@@ -110,6 +113,7 @@ return {
   {
     -- Add indentation guides even on blank lines
     "lukas-reineke/indent-blankline.nvim",
+    event = "BufEnter *.*",
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     opts = {
@@ -120,6 +124,7 @@ return {
   {
     -- comment commands
     "numToStr/Comment.nvim",
+    event = "BufEnter *.*",
     opts = {
       toggler = {
         line = "<leader>/",
@@ -136,16 +141,17 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
+    event = "BufEnter *.*",
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { "williamboman/mason.nvim", config = true },
       "williamboman/mason-lspconfig.nvim",
 
       -- Useful status updates for LSP
-      { "j-hui/fidget.nvim",       tag = "legacy", opts = {} },
+      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim",       opts = {} },
+      { "folke/neodev.nvim", opts = {} },
       {
         "windwp/nvim-autopairs",
         opts = {
@@ -166,6 +172,7 @@ return {
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
+    event = "BufEnter *.*",
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       "L3MON4D3/LuaSnip",
@@ -188,11 +195,12 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
+    event = "BufEnter *.*",
     config = function()
       require("plugins.configs.null-ls")
     end,
   },
-  "nvim-treesitter/nvim-treesitter-context",
+  { "nvim-treesitter/nvim-treesitter-context", event = "BufEnter *.*" },
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,

@@ -9,6 +9,7 @@ wk.register({
 
 -- Telescope mapppings
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("emoji")
 local builtin = require("telescope.builtin")
 
 wk.register({
