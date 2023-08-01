@@ -33,7 +33,6 @@ local lSsources = {
   }),
 }
 
--- used for format on save
 require("null-ls").setup({
   sources = lSsources,
 })
