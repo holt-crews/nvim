@@ -29,11 +29,12 @@ return {
   { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
     cmd = "Telescope",
     module = "telescope",
     opts = {
       defaults = {
+        layout_strategy = "flex",
         layout_config = {
           preview_cutoff = 1,
         },
@@ -64,9 +65,9 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { "buffers" },
+        lualine_c = { { "buffers", icons_enabled = false } },
         lualine_x = { "fileformat" },
-        lualine_y = { "filetype" },
+        lualine_y = { { "filetype", icons_enabled = false } },
         lualine_z = { "location" },
       },
     },

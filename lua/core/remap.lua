@@ -20,6 +20,7 @@ wk.register({
     w = { builtin.live_grep, "[f]ind [w]ord" },
     b = { builtin.buffers, "[f]ind [b]uffer" },
     o = { builtin.oldfiles, "[f]ind [o]ldfiles" },
+    c = { builtin.treesitter, "[f]ind [c]ode" },
   },
   ["<leader>g"] = {
     name = "+file",
