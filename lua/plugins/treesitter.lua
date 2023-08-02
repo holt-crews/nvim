@@ -1,5 +1,4 @@
 -- https://www.lazyvim.org/plugins/treesitter
-
 return {
   "nvim-treesitter/nvim-treesitter",
   version = false,

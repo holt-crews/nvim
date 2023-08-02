@@ -57,6 +57,11 @@ local servers = {
       on_attach(client, bufnr)
       client.server_capabilities.hoverProvider = false
     end,
+    init_options = {
+      settings = {
+        args = { "--ignore F405,E402", "--ignore-noqa" }, -- allows for sys.path before import and for * imports
+      },
+    },
   },
   pyright = {
     settings = {
@@ -106,12 +111,14 @@ mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
 })
 
+local default_config = {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
 mason_lspconfig.setup_handlers({
   function(server_name)
-    require("lspconfig")[server_name].setup({
-      capabilities = servers[server_name] and servers[server_name]["capabilities"] or capabilities,
-      on_attach = servers[server_name] and servers[server_name]["on_attach"] or on_attach,
-      settings = servers[server_name] and servers[server_name]["settings"] or {},
-    })
+    -- this merges "default_config" and the custom config for the server
+    require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", default_config, servers[server_name]))
   end,
 })
