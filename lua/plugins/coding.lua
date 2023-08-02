@@ -4,7 +4,8 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
-    event = "BufReadPost",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "LspInfo", "LspInstall", "LspUninstall" },
     config = function()
       require("plugins.configs.lsp")
     end,

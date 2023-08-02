@@ -119,6 +119,6 @@ local default_config = {
 mason_lspconfig.setup_handlers({
   function(server_name)
     -- this merges "default_config" and the custom config for the server
-    require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", default_config, servers[server_name]))
+    require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", default_config, servers[server_name] or {}))
   end,
 })
