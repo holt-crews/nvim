@@ -1,7 +1,7 @@
 return {
   "tpope/vim-sleuth",
   "tpope/vim-vinegar",
-  { "tpope/vim-surround", event = "BufEnter *.*" },
+  { "tpope/vim-surround", event = "BufReadPost" },
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   { "folke/trouble.nvim", opts = { icons = false } },
   {
@@ -77,7 +77,7 @@ return {
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
-    event = "BufEnter *.*",
+    event = "BufReadPost",
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
@@ -113,7 +113,7 @@ return {
   {
     -- Add indentation guides even on blank lines
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufEnter *.*",
+    event = "BufReadPost",
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     opts = {
@@ -124,7 +124,7 @@ return {
   {
     -- comment commands
     "numToStr/Comment.nvim",
-    event = "BufEnter *.*",
+    event = "BufReadPost",
     opts = {
       toggler = {
         line = "<leader>/",
@@ -141,7 +141,7 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
-    event = "BufEnter *.*", -- could fail if file doesn't have an extension
+    event = "BufReadPost",
     config = function()
       require("plugins.configs.lsp")
     end,
@@ -201,12 +201,12 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
-    event = "BufEnter *.*",
+    event = "BufReadPost",
     config = function()
       require("plugins.configs.null-ls")
     end,
   },
-  { "nvim-treesitter/nvim-treesitter-context", event = "BufEnter *.*" },
+  { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,
