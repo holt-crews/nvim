@@ -1,59 +1,10 @@
 return {
   "tpope/vim-sleuth",
   "tpope/vim-vinegar",
-  { "tpope/vim-surround", event = "BufReadPost" },
-  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim", opts = { icons = false } },
-  {
-    "ThePrimeagen/harpoon",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      global_settings = {
-        mark_branch = true,
-      },
-    },
-    config = function()
-      local mark = require("harpoon.mark")
-      local ui = require("harpoon.ui")
-
-      vim.keymap.set("n", "<leader>a", mark.add_file)
-      vim.keymap.set("n", "<leader>r", mark.rm_file)
-      vim.keymap.set("n", "<leader>R", mark.clear_all)
-      vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-      vim.keymap.set("n", "<C-n>", function()
-        ui.nav_next()
-      end)
-    end,
-  },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-  "xiyaowong/telescope-emoji.nvim",
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
-    cmd = "Telescope",
-    module = "telescope",
-    opts = {
-      defaults = {
-        color_devicons = false,
-        layout_strategy = "flex",
-        layout_config = {
-          preview_cutoff = 1,
-        },
-      },
-      extensions = {
-        -- :Telescope harpoon marks
-        harpoon = {},
-        fzf = {
-          fuzzy = true, -- false will only do exact matching
-          override_generic_sorter = true, -- override the generic sorter
-          override_file_sorter = true, -- override the file sorter
-          case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-          -- the default case_mode is "smart_case"
-        },
-      },
-    },
-  },
+  { "tpope/vim-surround",     event = "BufReadPost" },
+  { "folke/which-key.nvim",   keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/trouble.nvim",     opts = { icons = false } },
+  { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
     -- Set lualine as statusline
     "nvim-lualine/lualine.nvim",
@@ -136,77 +87,7 @@ return {
       },
     },
   },
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
-  {
-    -- LSP Configuration & Plugins
-    "neovim/nvim-lspconfig",
-    event = "BufReadPost",
-    config = function()
-      require("plugins.configs.lsp")
-    end,
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { "williamboman/mason.nvim", config = true },
-      "williamboman/mason-lspconfig.nvim",
 
-      -- Useful status updates for LSP
-      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim", opts = {} },
-      {
-        "windwp/nvim-autopairs",
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { "TelescopePrompt", "vim" },
-        },
-        config = function(_, opts)
-          require("nvim-autopairs").setup(opts)
-
-          -- setup cmp for autopairs
-          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-          require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-        end,
-      },
-    },
-  },
-
-  {
-    -- Autocompletion
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    config = function()
-      require("plugins.configs.cmp")
-    end,
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-
-      -- Adds LSP completion capabilities
-      "hrsh7th/cmp-nvim-lsp",
-
-      -- Adds a number of user-friendly snippets
-      "rafamadriz/friendly-snippets",
-      "onsails/lspkind.nvim",
-      {
-        "rust-lang/rust.vim",
-        ft = "rust",
-        init = function()
-          vim.g.rustfmt_autosave = 1
-        end,
-      },
-    },
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = "BufReadPost",
-    config = function()
-      require("plugins.configs.null-ls")
-    end,
-  },
-  { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,
@@ -215,5 +96,5 @@ return {
     "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerAttachToBuffer",
   },
-  { import = "plugins.plugs" },
+  { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
 }
