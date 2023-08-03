@@ -11,14 +11,16 @@ return {
       local mark = require("harpoon.mark")
       local ui = require("harpoon.ui")
 
-      vim.keymap.set("n", "<leader>a", mark.add_file)
-      vim.keymap.set("n", "<leader>r", mark.rm_file)
-      vim.keymap.set("n", "<leader>R", mark.clear_all)
-      vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-      vim.keymap.set("n", "<C-n>", function()
-        ui.nav_next()
-      end)
+      local wk = require("which-key")
+      wk.register({
+        ["<leader>"] = {
+          a = { mark.add_file, "Mark File (harpoon)" },
+          r = { mark.rm_file, "Remove File (harpoon)" },
+          R = { mark.clear_all, "Remove All Files (harpoon)" },
+        },
+        ["<C-e>"] = { ui.toggle_quick_menu, "Toggle Quick Menu (harpoon)"},
+        ["<C-i>"] = { function() ui.nav_next() end, "Navigate next mark (harpoon)"},
+      })
     end,
   },
   { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },

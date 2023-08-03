@@ -1,10 +1,20 @@
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("x", "<leader>p", [["_dP]])
-
 local wk = require("which-key")
 
 wk.register({
+  ["<leader>pv"] = { vim.cmd.Ex, "Open Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
+})
+
+wk.register({
+  ["<leader>p"] = { [["_dP]], "Paste, no copy" },
+}, { mode = "x" })
+
+-- buffer navigate
+wk.register({
+  ["<C-n>"] = { "<cmd>bn<CR>", "Next Buffer" },
+  ["<C-p>"] = { "<cmd>bp<CR>", "Previous Buffer" },
+  ["<leader>dd"] = { "<cmd>bd<CR>", "Delete Buffer" },
+  ["<leader>bd"] = { '<cmd> %bdelete|edit #|normal `" <CR>', "[b]uffer [d]elete all" },
 })
 
 -- Telescope mapppings
@@ -34,10 +44,6 @@ wk.register({
   },
 })
 
-wk.register({
-  ["<leader>bd"] = { '<cmd> %bdelete|edit #|normal `" <CR>', "[b]uffer [d]elete all" },
-})
--- vim.keymap.set("n", "<leader>bd", '<cmd> %bdelete|edit #|normal `" <CR>')
 -- TODO: figure out vim fugitive (Git)
 -- vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 
