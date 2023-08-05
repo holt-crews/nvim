@@ -4,8 +4,8 @@ local null_ls = require("null-ls")
 local lSsources = {
   null_ls.builtins.formatting.prettierd.with({
     filetypes = {
-      "javascript",
-      "typescript",
+      -- "javascript",
+      -- "typescript",
       "css",
       "scss",
       "html",
@@ -15,6 +15,12 @@ local lSsources = {
       "graphql",
       "md",
       "txt",
+    },
+  }),
+  null_ls.builtins.formatting.eslint_d.with({
+    filetypes = {
+      "javascript",
+      "typescript",
     },
   }),
 

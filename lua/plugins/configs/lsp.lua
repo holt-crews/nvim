@@ -82,7 +82,12 @@ local servers = {
     end)(),
   },
   rust_analyzer = {},
-  tsserver = {},
+  tsserver = {
+    on_attach = function(client, bufnr)
+      on_attach(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
+    end,
+  },
 
   lua_ls = {
     settings = {
