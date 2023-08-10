@@ -1,6 +1,22 @@
 return {
   "tpope/vim-sleuth",
-  "tpope/vim-vinegar",
+  -- "tpope/vim-vinegar",
+  {
+    "stevearc/oil.nvim",
+    config = function()
+      require("nvim-web-devicons").set_default_icon('', '#d4be98', 65)
+      require("nvim-web-devicons").setup({
+        color_icons = false,
+      }) -- d4be98
+      require("oil").setup({
+        columns = {
+          { "icon", add_padding = false },
+        },
+      })
+    end,
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
   { "tpope/vim-surround",     event = "BufReadPost" },
   { "folke/which-key.nvim",   keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   { "folke/trouble.nvim",     opts = { icons = false } },

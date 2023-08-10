@@ -1,5 +1,7 @@
 local wk = require("which-key")
 
+vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+
 wk.register({
   ["<leader>pv"] = { vim.cmd.Ex, "Open Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
