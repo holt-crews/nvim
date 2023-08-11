@@ -44,6 +44,8 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "crates" },
+    { name = "buffer" },
   },
   window = {
     completion = {
@@ -73,6 +75,30 @@ cmp.setup({
   end,
 })
 
+-- completions for command mode
+-- `/` cmdline setup.
+cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  },
+})
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    {
+      name = "cmdline",
+      option = {
+        ignore_cmds = { "Man", "!" },
+      },
+    },
+  }),
+})
+
 -- puts diagnostics in floating mode
 vim.diagnostic.config({
   underline = true,
@@ -85,7 +111,7 @@ vim.diagnostic.config({
     focusable = false,
   },
   update_in_insert = false, -- default to false
-  severity_sort = true,     -- default to false
+  severity_sort = true, -- default to false
 })
 
 -- add diagnostic symbols

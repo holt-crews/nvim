@@ -4,7 +4,7 @@ local oil = require("oil")
 
 wk.register({
   ["<leader>pv"] = { oil.open, "Open Netrw" },
-  ["-"] = { oil.open_float, "Open Float Netrw"},
+  ["-"] = { oil.open_float, "Open Float Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
 })
 
@@ -125,5 +125,32 @@ wk.register({
       require("treesitter-context").go_to_context()
     end,
     "jump to [c]ontext",
+  },
+})
+
+wk.register({
+  ["<leader>rcu"] = {
+    function()
+      require("crates").upgrade_all_crates()
+    end,
+    "[r]ust [c]rates [u]update",
+  },
+})
+
+-- debugger
+wk.register({
+  ["<leader>d"] = {
+    b = {
+      "<cmd> DapToggleBreakpoint <CR>",
+      "[d]ebugger [b]reakpoint",
+    },
+    us = {
+      function()
+        local widgets = require("dap.ui.widgets")
+        local sidebar = widgets.sidebar(widgets.scopes)
+        sidebar.open()
+      end,
+      "[d]ebugger sidebar",
+    },
   },
 })
