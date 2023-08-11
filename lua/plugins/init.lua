@@ -1,6 +1,9 @@
 return {
   "tpope/vim-sleuth",
-  -- "tpope/vim-vinegar",
+  { "tpope/vim-surround",     event = "BufReadPost" },
+  { "folke/which-key.nvim",   keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/trouble.nvim",     opts = { icons = false } },
+  { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
     "stevearc/oil.nvim",
     config = function()
@@ -20,10 +23,6 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
-  { "tpope/vim-surround", event = "BufReadPost" },
-  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim", opts = { icons = false } },
-  { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
     -- Set lualine as statusline
     "nvim-lualine/lualine.nvim",
