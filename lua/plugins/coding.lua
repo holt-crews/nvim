@@ -54,14 +54,30 @@ return {
       -- Adds a number of user-friendly snippets
       "rafamadriz/friendly-snippets",
       "onsails/lspkind.nvim",
-      {
-        "rust-lang/rust.vim",
-        ft = "rust",
-        init = function()
-          vim.g.rustfmt_autosave = 1
-        end,
-      },
     },
+  },
+  {
+    "rust-lang/rust.vim",
+    ft = "rust",
+    dependencies = "neovim/nvim-lspconfig",
+    init = function()
+      vim.g.rustfmt_autosave = 1
+    end,
+  },
+  {
+    "simrat39/rust-tools.nvim",
+    ft = "rust",
+    dependencies = "neovim/nvim-lspconfig",
+    opts = function()
+      return require("plugins.configs.rust-tools")
+    end,
+    config = function(_, opts)
+      require("rust-tools").setup(opts)
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    ft = "rust" -- just debugging with rust for now
   },
   {
     "jose-elias-alvarez/null-ls.nvim",

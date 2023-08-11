@@ -81,7 +81,16 @@ local servers = {
       return capabilities
     end)(),
   },
-  rust_analyzer = {},
+  -- rust_analyzer = {
+  --   filetypes = { "rust" },
+  --   settings = {
+  --     ["rust-analyzer"] = {
+  --       cargo = {
+  --         allFeatures = true,
+  --       },
+  --     },
+  --   },
+  -- },
   tsserver = {
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
@@ -127,3 +136,5 @@ mason_lspconfig.setup_handlers({
     require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", default_config, servers[server_name] or {}))
   end,
 })
+
+return default_config
