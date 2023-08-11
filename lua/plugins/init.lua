@@ -1,4 +1,5 @@
 return {
+  "mg979/vim-visual-multi",
   "tpope/vim-sleuth",
   { "tpope/vim-surround",     event = "BufReadPost" },
   { "folke/which-key.nvim",   keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
