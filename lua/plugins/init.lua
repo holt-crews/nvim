@@ -1,9 +1,10 @@
 return {
   "mg979/vim-visual-multi",
   "tpope/vim-sleuth",
-  { "tpope/vim-surround",     event = "BufReadPost" },
-  { "folke/which-key.nvim",   keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim",     opts = { icons = false } },
+  "nvim-treesitter/nvim-treesitter-context",
+  { "tpope/vim-surround", event = "BufReadPost" },
+  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/trouble.nvim", opts = { icons = false } },
   { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
     "stevearc/oil.nvim",
@@ -115,5 +116,4 @@ return {
     "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerAttachToBuffer",
   },
-  { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
 }
