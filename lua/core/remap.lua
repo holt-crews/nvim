@@ -123,9 +123,9 @@ wk.register({
   },
 })
 
--- neogit
--- wk.register({
---   ["<leader>n"] = {
---     g = { "<cmd>Neogit<CR>", "Open [n]eo[g]it" },
---   },
--- })
+-- fugitive
+wk.register({
+  ["<leader>g"] = {
+    g = { "<cmd>below vert Git<CR>", "Open vim-fugitive" },
+  },
+})
