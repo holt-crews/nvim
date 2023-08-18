@@ -5,16 +5,18 @@ return {
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim", -- required
+      "nvim-lua/plenary.nvim",         -- required
       "nvim-telescope/telescope.nvim", -- optional
-      "sindrets/diffview.nvim", -- optional
+      "sindrets/diffview.nvim",        -- optional
     },
-    config = true,
+    config = {
+      kind = "floating",
+    },
     cmd = "Neogit",
   },
-  { "tpope/vim-surround", event = "BufReadPost" },
-  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim", opts = { icons = false } },
+  { "tpope/vim-surround",     event = "BufReadPost" },
+  { "folke/which-key.nvim",   keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/trouble.nvim",     opts = { icons = false } },
   { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
     "stevearc/oil.nvim",
