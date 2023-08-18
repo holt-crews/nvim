@@ -21,28 +21,25 @@ wk.register({
 })
 
 -- Telescope mapppings
-require("telescope").load_extension("fzf")
-local builtin = require("telescope.builtin")
-
 wk.register({
   ["<leader>f"] = {
     name = "+file",
-    f = { builtin.find_files, "[f]ind [f]ile" },
+    f = { "<cmd>Telescope find_files<CR>", "[f]ind [f]ile" },
     a = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "[f]ind [a]ll files" },
-    g = { builtin.git_files, "[f]ind [g]it Files" },
-    w = { builtin.live_grep, "[f]ind [w]ord" },
-    b = { builtin.buffers, "[f]ind [b]uffer" },
-    o = { builtin.oldfiles, "[f]ind [o]ldfiles" },
-    c = { builtin.treesitter, "[f]ind [c]ode" },
+    g = { "<cmd>Telescope git_files<CR>", "[f]ind [g]it Files" },
+    w = { "<cmd>Telescope live_grep<CR>", "[f]ind [w]ord" },
+    b = { "<cmd>Telescope buffers<CR>", "[f]ind [b]uffer" },
+    o = { "<cmd>Telescope oldfiles<CR>", "[f]ind [o]ldfiles" },
+    c = { "<cmd>Telescope treesitter<CR>", "[f]ind [c]ode" },
   },
   ["<leader>g"] = {
     name = "+file",
-    s = { builtin.git_status, "[g]it [s]tatus" },
-    c = { builtin.git_commits, "[g]it [c]ommits" },
+    s = { "<cmd>Telescope git_status<CR>", "[g]it [s]tatus" },
+    c = { "<cmd> Telescope git_commits<CR>", "[g]it [c]ommits" },
   },
   ["<leader>h"] = {
     name = "+file",
-    t = { builtin.help_tags, "[h]elp [t]ags" },
+    t = { "<cmd>Telescope help_tags<CR>", "[h]elp [t]ags" },
   },
 })
 

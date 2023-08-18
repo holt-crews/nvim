@@ -2,6 +2,7 @@ return {
   {
     "ThePrimeagen/harpoon",
     dependencies = { "nvim-lua/plenary.nvim" },
+    event = "VeryLazy",
     opts = {
       global_settings = {
         mark_branch = true,
@@ -18,16 +19,21 @@ return {
           r = { mark.rm_file, "Remove File (harpoon)" },
           R = { mark.clear_all, "Remove All Files (harpoon)" },
         },
-        ["<C-e>"] = { ui.toggle_quick_menu, "Toggle Quick Menu (harpoon)"},
-        ["<C-i>"] = { function() ui.nav_next() end, "Navigate next mark (harpoon)"},
+        ["<C-e>"] = { ui.toggle_quick_menu, "Toggle Quick Menu (harpoon)" },
+        ["<C-i>"] = {
+          function()
+            ui.nav_next()
+          end,
+          "Navigate next mark (harpoon)",
+        },
       })
     end,
   },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", cmd = "Telescope" },
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
-    lazy = false,
+    lazy = true,
     cmd = "Telescope",
     module = "telescope",
     opts = {
@@ -42,10 +48,10 @@ return {
         -- :Telescope harpoon marks
         harpoon = {},
         fzf = {
-          fuzzy = true, -- false will only do exact matching
+          fuzzy = true,                   -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
-          override_file_sorter = true, -- override the file sorter
-          case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
         },
       },
