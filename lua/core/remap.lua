@@ -66,55 +66,24 @@ wk.register({
     function()
       vim.lsp.buf.format({ async = true })
     end,
-    "[F]or[m]at",
+    "[f]or[m]at",
   },
 })
 
 -- folke/trouble.nvim mappings
-local trouble = require("trouble")
-
 wk.register({
   ["<leader>x"] = {
     name = "+file",
-    x = {
-      function()
-        trouble.toggle()
-      end,
-      "Open Trouble",
-    },
-    w = {
-      function()
-        trouble.toggle("workspace_diagnostics")
-      end,
-      "[x]Trouble [w]orkspace diagnostics",
-    },
-    d = {
-      function()
-        trouble.toggle("document_diagnostics")
-      end,
-      "[x]Trouble [d]ocument diagnostics",
-    },
-    l = {
-      function()
-        trouble.toggle("loclist")
-      end,
-      "[x]Trouble [l]oclist",
-    },
-    q = {
-      function()
-        trouble.toggle("quickfix")
-      end,
-      "[x]Trouble [q]uickfix",
-    },
+    x = { "<cmd>TroubleToggle<CR>", "Open Trouble" },
+    w = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "[x]Trouble [w]orkspace diagnostics" },
+    d = { "<cmd>TroubleToggle document_diagnostics<CR>", "[x]Trouble [d]ocument diagnostics" },
+    l = { "<cmd>TroubleToggle loclist<CR>", "[x]Trouble [l]oclist" },
+    q = { "<cmd>TroubleToggle quickfix<CR>", "[x]Trouble [q]uickfix" },
+    r = { "<cmd>TroubleRefresh<CR>", "[x]Trouble [r]efresh" },
   },
   ["g"] = {
     name = "+file",
-    R = {
-      function()
-        trouble.toggle("lsp_references")
-      end,
-      "Trouble References",
-    },
+    R = { "<cmd>TroubleToggle lsp_references<CR>", "Trouble References" },
   },
 })
 
@@ -151,5 +120,12 @@ wk.register({
       end,
       "[d]ebugger sidebar",
     },
+  },
+})
+
+-- neogit
+wk.register({
+  ["<leader>n"] = {
+    g = { "<cmd>Neogit<CR>", "Open [n]eo[g]it" },
   },
 })
