@@ -2,6 +2,7 @@ return {
   "mg979/vim-visual-multi",
   "tpope/vim-sleuth",
   "nvim-treesitter/nvim-treesitter-context",
+  "tpope/vim-fugitive",
   { "tpope/vim-surround", event = "BufReadPost" },
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   { "folke/trouble.nvim", opts = { icons = false }, cmd = "Trouble" },
@@ -106,18 +107,6 @@ return {
         block = "<leader>bc",
       },
     },
-  },
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- required
-      "nvim-telescope/telescope.nvim", -- optional
-      "sindrets/diffview.nvim", -- optional
-    },
-    config = {
-      kind = "auto",
-    },
-    cmd = "Neogit",
   },
   {
     "christoomey/vim-tmux-navigator",

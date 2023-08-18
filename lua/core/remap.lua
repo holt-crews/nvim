@@ -124,8 +124,8 @@ wk.register({
 })
 
 -- neogit
-wk.register({
-  ["<leader>n"] = {
-    g = { "<cmd>Neogit<CR>", "Open [n]eo[g]it" },
-  },
-})
+-- wk.register({
+--   ["<leader>n"] = {
+--     g = { "<cmd>Neogit<CR>", "Open [n]eo[g]it" },
+--   },
+-- })
