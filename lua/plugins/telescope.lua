@@ -29,12 +29,11 @@ return {
       })
     end,
   },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", cmd = "Telescope" },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", event = "VeryLazy" },
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
-    lazy = true,
-    cmd = "Telescope",
+    event = "VeryLazy",
     module = "telescope",
     opts = {
       defaults = {

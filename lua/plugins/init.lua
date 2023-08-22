@@ -4,7 +4,7 @@ return {
   { "tpope/vim-fugitive", cmd = { "G", "Git" } },
   { "tpope/vim-surround", event = "BufReadPost" },
   { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim", opts = { icons = false }, cmd = "Trouble" },
+  { "folke/trouble.nvim", opts = { icons = false }, cmd = {"Trouble", "TroubleToggle"} },
   { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
     "stevearc/oil.nvim",
