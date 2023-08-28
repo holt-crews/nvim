@@ -81,20 +81,10 @@ local servers = {
       return capabilities
     end)(),
   },
-  -- rust_analyzer = {
-  --   filetypes = { "rust" },
-  --   settings = {
-  --     ["rust-analyzer"] = {
-  --       cargo = {
-  --         allFeatures = true,
-  --       },
-  --     },
-  --   },
-  -- },
   tsserver = {
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
+      client.server_capabilities.documentFormattingProvider = false
     end,
   },
 
