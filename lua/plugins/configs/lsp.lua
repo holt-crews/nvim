@@ -52,21 +52,22 @@ end
 local servers = {
   -- clangd = {},
   gopls = {},
-  ruff_lsp = {
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      client.server_capabilities.hoverProvider = false
-    end,
-    init_options = {
-      settings = {
-        args = { "--ignore F405,E402", "--ignore-noqa" }, -- allows for sys.path before import and for * imports
-      },
-    },
-  },
+  -- ruff_lsp = {
+  --   on_attach = function(client, bufnr)
+  --     on_attach(client, bufnr)
+  --     client.server_capabilities.hoverProvider = false
+  --   end,
+  --   init_options = {
+  --     settings = {
+  --       args = { "--ignore F405,E402", "--ignore-noqa" }, -- allows for sys.path before import and for * imports
+  --     },
+  --   },
+  -- },
   pyright = {
     settings = {
       python = {
         analysis = {
+          autoSearchPaths = true,
           useLibraryCodeForTypes = true,
           diagnosticSeverityOverrides = {
             reportUnusedVariable = "warning", -- or anything
@@ -75,11 +76,11 @@ local servers = {
         },
       },
     },
-    capabilities = (function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
-      return capabilities
-    end)(),
+    -- capabilities = (function()
+    --   local capabilities = vim.lsp.protocol.make_client_capabilities()
+    --   capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+    --   return capabilities
+    -- end)(),
   },
   tsserver = {
     on_attach = function(client, bufnr)
