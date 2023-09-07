@@ -1,11 +1,22 @@
 return {
   "tpope/vim-sleuth",
-  {"nvim-treesitter/nvim-treesitter-context", event = "BufReadPost"},
-  { "tpope/vim-fugitive", cmd = { "G", "Git" } },
-  { "tpope/vim-surround", event = "BufReadPost" },
-  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
-  { "folke/trouble.nvim", opts = { icons = false }, cmd = {"Trouble", "TroubleToggle"} },
+  { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
+  { "tpope/vim-fugitive",                      cmd = { "G", "Git" } },
+  { "tpope/vim-surround",                      event = "BufReadPost" },
+  { "folke/which-key.nvim",                    keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  {
+    "folke/trouble.nvim",
+    opts = { icons = false },
+    cmd = { "Trouble", "TroubleToggle" },
+  },
   { "stevearc/dressing.nvim", event = "VeryLazy" },
+  {
+    "AckslD/swenv.nvim",
+    ft = "python",
+    opts = {
+      post_set_env = vim.cmd.LspRestart,
+    },
+  },
   {
     "stevearc/oil.nvim",
     config = function()
@@ -37,7 +48,24 @@ return {
       },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_b = {
+          "branch",
+          "diff",
+          {
+            "diagnostics",
+            on_click = function()
+              vim.cmd("TroubleToggle document_diagnostics")
+            end,
+          },
+          {
+            "swenv",
+            cond = function()
+              return vim.bo.filetype == "python"
+            end,
+            icon = false,
+            color = { fg = "#ddc7a1" },
+          },
+        },
         lualine_c = { { "buffers", icons_enabled = false } },
         lualine_x = { "fileformat" },
         lualine_y = { { "filetype", icons_enabled = false } },

@@ -126,3 +126,13 @@ wk.register({
     g = { "<cmd>below vert Git<CR>", "Open vim-fugitive" },
   },
 })
+
+-- swenv
+wk.register({
+  ["<leader>pe"] = {
+    function()
+      require('swenv.api').pick_venv()
+    end,
+    "Pick [p]ython [e]nvironment"
+  }
+})
