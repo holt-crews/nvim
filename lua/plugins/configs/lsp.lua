@@ -71,6 +71,7 @@ local servers = {
           useLibraryCodeForTypes = true,
           diagnosticSeverityOverrides = {
             reportUnusedVariable = "warning", -- or anything
+            reportGeneralTypeIssues = "warning",
           },
           typeCheckingMode = "basic",
         },
