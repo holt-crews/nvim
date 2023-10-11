@@ -11,13 +11,6 @@ return {
   },
   { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
-    "AckslD/swenv.nvim",
-    ft = "python",
-    opts = {
-      post_set_env = vim.cmd.LspRestart,
-    },
-  },
-  {
     "stevearc/oil.nvim",
     config = function()
       require("nvim-web-devicons").set_default_icon("", "#d4be98", 65)
@@ -33,13 +26,10 @@ return {
         },
       })
     end,
-    -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   {
-    -- Set lualine as statusline
     "nvim-lualine/lualine.nvim",
-    -- See `:help lualine.txt`
     opts = {
       options = {
         theme = "gruvbox-material",
@@ -74,11 +64,9 @@ return {
     },
   },
   {
-    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
     event = "BufReadPost",
     opts = {
-      -- See `:help gitsigns.txt`
       signs = {
         add = { text = "│" },
         change = { text = "│" },
@@ -110,18 +98,20 @@ return {
     },
   },
   {
-    -- Add indentation guides even on blank lines
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPost",
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
+    main = "ibl",
     opts = {
-      char = "┊",
-      show_trailing_blankline_indent = false,
+      indent = {
+        char = "┊",
+      },
+      whitespace = {
+        remove_blankline_trail = true,
+      },
+      scope = { enabled = true },
     },
   },
   {
-    -- comment commands
     "numToStr/Comment.nvim",
     event = "BufReadPost",
     opts = {
