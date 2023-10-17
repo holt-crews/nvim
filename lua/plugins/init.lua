@@ -47,14 +47,6 @@ return {
               vim.cmd("TroubleToggle document_diagnostics")
             end,
           },
-          {
-            "swenv",
-            cond = function()
-              return vim.bo.filetype == "python"
-            end,
-            icon = false,
-            color = { fg = "#ddc7a1" },
-          },
         },
         lualine_c = { { "buffers", icons_enabled = false } },
         lualine_x = { "fileformat" },
