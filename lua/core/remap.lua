@@ -126,3 +126,13 @@ wk.register({
     g = { "<cmd>below vert Git<CR>", "Open vim-fugitive" },
   },
 })
+
+-- gopher.nvim
+wk.register({
+  ["<leader>gs"] = {
+    j = { "<cmd> GoTagAdd json <CR>", "Add [g]o [s]truct [j]son tags" },
+    y = { "<cmd> GoTagAdd yaml <CR>", "Add [g]o [s]truct [y]aml tags" },
+  },
+  ["<leader>gdc"] = { "<cmd> GoCmt <CR>", "Add [g]o [d]oc [c]omment" },
+  ["<leader>gif"] = { "<cmd> GoIfErr <CR>", "Add [g]o [if] err" },
+})
