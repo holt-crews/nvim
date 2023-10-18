@@ -1,3 +1,7 @@
+local mason_lspconfig = require("mason-lspconfig")
+local lspconfig = require("lspconfig")
+local util = require("lspconfig/util")
+
 -- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -51,7 +55,20 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  gopls = {},
+  gopls = {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+    settings = {
+      gopls = {
+        completeUnimported = true,
+        usePlaceholders = true,
+        analyses = {
+          unusedparams = true,
+        },
+      },
+    },
+  },
   -- ruff_lsp = {
   --   on_attach = function(client, bufnr)
   --     on_attach(client, bufnr)
@@ -111,7 +128,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require("mason-lspconfig")
 
 mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
@@ -125,7 +141,7 @@ local default_config = {
 mason_lspconfig.setup_handlers({
   function(server_name)
     -- this merges "default_config" and the custom config for the server
-    require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", default_config, servers[server_name] or {}))
+    lspconfig[server_name].setup(vim.tbl_deep_extend("force", default_config, servers[server_name] or {}))
   end,
 })
 
