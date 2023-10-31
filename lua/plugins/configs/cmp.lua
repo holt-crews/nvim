@@ -11,7 +11,8 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
-  completion = { completeopt = "menu,menuone,noinsert" },
+  preselect = cmp.PreselectMode.None,
+  completion = { completeopt = "menu,menuone,noinsert,noselect" },
   mapping = cmp.mapping.preset.insert({
     -- ['<C-n>'] = cmp.mapping.select_next_item(),
     -- ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -20,7 +21,7 @@ cmp.setup({
     -- ['<C-Space>'] = cmp.mapping.complete {},
     ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      -- select = true,
     }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -111,7 +112,7 @@ vim.diagnostic.config({
     focusable = false,
   },
   update_in_insert = false, -- default to false
-  severity_sort = true, -- default to false
+  severity_sort = true,     -- default to false
 })
 
 -- add diagnostic symbols
