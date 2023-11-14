@@ -100,6 +100,26 @@ local servers = {
     --   return capabilities
     -- end)(),
   },
+  -- https://jdhao.github.io/2023/07/22/neovim-pylsp-setup/
+  -- black formatting is not working with this for some reason
+  -- pylsp = {
+  --   plugins = {
+  --     -- formatter options
+  --     black = { enabled = true },
+  --     autopep8 = { enabled = false },
+  --     yapf = { enabled = false },
+  --     -- linter options
+  --     pylint = { enabled = true, executable = "pylint" },
+  --     pyflakes = { enabled = false },
+  --     pycodestyle = { enabled = false },
+  --     -- type checker
+  --     pylsp_mypy = { enabled = true },
+  --     -- auto-completion options
+  --     jedi_completion = { fuzzy = true },
+  --     -- import sorting
+  --     -- pyls_isort = { enabled = true },
+  --   },
+  -- },
   tsserver = {
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
