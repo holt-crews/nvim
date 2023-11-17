@@ -46,17 +46,17 @@ local lSsources = {
   }),
 
   -- might require some additional setup/installation: https://github.com/disrupted/blackd-client
-  null_ls.builtins.formatting.blackd.with({
-    filetypes = {
-      "python",
-    },
-  }),
-  null_ls.builtins.diagnostics.mypy.with({
-    extra_args = function()
-      local virtual = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX") or "/usr"
-      return { "--python-executable", virtual .. "/bin/python3" }
-    end,
-  }),
+  -- null_ls.builtins.formatting.blackd.with({
+  --   filetypes = {
+  --     "python",
+  --   },
+  -- }),
+  -- null_ls.builtins.diagnostics.mypy.with({
+  --   extra_args = function()
+  --     local virtual = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX") or "/usr"
+  --     return { "--python-executable", virtual .. "/bin/python3" }
+  --   end,
+  -- }),
 
   null_ls.builtins.formatting.gofumpt,
   null_ls.builtins.formatting.goimports_reviser,

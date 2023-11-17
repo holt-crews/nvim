@@ -69,17 +69,17 @@ local servers = {
       },
     },
   },
-  -- ruff_lsp = {
-  --   on_attach = function(client, bufnr)
-  --     on_attach(client, bufnr)
-  --     client.server_capabilities.hoverProvider = false
-  --   end,
-  --   init_options = {
-  --     settings = {
-  --       args = { "--ignore F405,E402", "--ignore-noqa" }, -- allows for sys.path before import and for * imports
-  --     },
-  --   },
-  -- },
+  ruff_lsp = {
+    -- on_attach = function(client, bufnr)
+    --   on_attach(client, bufnr)
+    --   client.server_capabilities.hoverProvider = false
+    -- end,
+    init_options = {
+      settings = {
+        args = { "--ignore F405,E402" }, -- "--ignore-noqa" }, -- allows for sys.path before import and for * imports
+      },
+    },
+  },
   pyright = {
     settings = {
       python = {
@@ -88,17 +88,24 @@ local servers = {
           useLibraryCodeForTypes = true,
           diagnosticSeverityOverrides = {
             reportUnusedVariable = "warning", -- or anything
-            reportGeneralTypeIssues = "warning",
+            reportImportCycles = "warning",
+            reportUnknownMemberType = "warning",
+            reportUnknownLambdaType = "warning",
+            reportUnknownArgumentType = "warning",
+            reportUnknownParameterType = "warning",
+            reportUnknownVariableType = "warning",
+            reportMissingTypeArgument = "warning",
+            -- reportGeneralTypeIssues = "warning",
           },
-          typeCheckingMode = "basic",
+          typeCheckingMode = "strict", -- use mypy
         },
       },
     },
-    -- capabilities = (function()
-    --   local capabilities = vim.lsp.protocol.make_client_capabilities()
-    --   capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
-    --   return capabilities
-    -- end)(),
+    capabilities = (function()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+      return capabilities
+    end)(),
   },
   -- https://jdhao.github.io/2023/07/22/neovim-pylsp-setup/
   -- black formatting is not working with this for some reason
