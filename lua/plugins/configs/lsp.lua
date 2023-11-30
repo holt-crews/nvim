@@ -76,7 +76,31 @@ local servers = {
     -- end,
     init_options = {
       settings = {
-        args = { "--ignore F405,E402" }, -- "--ignore-noqa" }, -- allows for sys.path before import and for * imports
+        -- args = { "--ignore F405,E402" }, -- "--ignore-noqa" }, -- allows for sys.path before import and for * imports
+      },
+    },
+    commands = {
+      RuffAutofix = {
+        function()
+          vim.lsp.buf.execute_command({
+            command = "ruff.applyAutofix",
+            arguments = {
+              { uri = vim.uri_from_bufnr(0) },
+            },
+          })
+        end,
+        description = "Ruff: Fix all auto-fixable problems",
+      },
+      RuffOrganizeImports = {
+        function()
+          vim.lsp.buf.execute_command({
+            command = "ruff.applyOrganizeImports",
+            arguments = {
+              { uri = vim.uri_from_bufnr(0) },
+            },
+          })
+        end,
+        description = "Ruff: Format imports",
       },
     },
   },

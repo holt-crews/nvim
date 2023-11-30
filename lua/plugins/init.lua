@@ -1,7 +1,7 @@
 return {
   "tpope/vim-sleuth",
   { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
-  { "tpope/vim-fugitive",                      cmd = { "G", "Git" } },
+  -- { "tpope/vim-fugitive",                      cmd = { "G", "Git" } },
   { "tpope/vim-surround",                      event = "BufReadPost" },
   { "folke/which-key.nvim",                    keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   {
