@@ -156,6 +156,12 @@ local servers = {
       on_attach(client, bufnr)
       client.server_capabilities.documentFormattingProvider = false
     end,
+    root_dir = util.root_pattern(".git"),
+    init_options = {
+      preferences = {
+        disableSuggestions = true,
+      },
+    },
   },
 
   lua_ls = {
