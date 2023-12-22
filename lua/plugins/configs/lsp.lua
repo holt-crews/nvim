@@ -151,18 +151,19 @@ local servers = {
   --     -- pyls_isort = { enabled = true },
   --   },
   -- },
-  tsserver = {
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      client.server_capabilities.documentFormattingProvider = false
-    end,
-    root_dir = util.root_pattern(".git"),
-    init_options = {
-      preferences = {
-        disableSuggestions = true,
-      },
-    },
-  },
+  -- using typescript-tools.nvim instead
+  -- tsserver = {
+  --   on_attach = function(client, bufnr)
+  --     on_attach(client, bufnr)
+  --     client.server_capabilities.documentFormattingProvider = false
+  --   end,
+  --   root_dir = util.root_pattern(".git"),
+  --   init_options = {
+  --     preferences = {
+  --       disableSuggestions = true,
+  --     },
+  --   },
+  -- },
 
   lua_ls = {
     settings = {

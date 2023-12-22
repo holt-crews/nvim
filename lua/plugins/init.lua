@@ -2,8 +2,8 @@ return {
   "tpope/vim-sleuth",
   { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
   -- { "tpope/vim-fugitive",                      cmd = { "G", "Git" } },
-  { "tpope/vim-surround",                      event = "BufReadPost" },
-  { "folke/which-key.nvim",                    keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "tpope/vim-surround", event = "BufReadPost" },
+  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   {
     "folke/trouble.nvim",
     opts = { icons = false },
@@ -124,19 +124,5 @@ return {
   {
     "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerAttachToBuffer",
-  },
-  {
-    "olexsmir/gopher.nvim",
-    ft = "go",
-    config = function(_, opts)
-      require("gopher").setup(opts)
-    end,
-    build = function()
-      vim.cmd([[silent! GoInstallDeps]])
-    end,
-    requires = { -- dependencies
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
   },
 }

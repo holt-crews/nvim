@@ -15,10 +15,10 @@ return {
       "williamboman/mason-lspconfig.nvim",
 
       -- Useful status updates for LSP
-      { "j-hui/fidget.nvim",       opts = {} }, -- tag = "legacy",
+      { "j-hui/fidget.nvim", opts = {} }, -- tag = "legacy",
 
       -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim",       opts = {} },
+      { "folke/neodev.nvim", opts = {} },
       {
         "windwp/nvim-autopairs",
         opts = {
@@ -89,6 +89,25 @@ return {
       crates.setup(opts)
       crates.show()
     end,
+  },
+  {
+    "olexsmir/gopher.nvim",
+    ft = "go",
+    config = function(_, opts)
+      require("gopher").setup(opts)
+    end,
+    build = function()
+      vim.cmd([[silent! GoInstallDeps]])
+    end,
+    requires = { -- dependencies
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
   },
   {
     "mfussenegger/nvim-dap",
