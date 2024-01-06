@@ -114,7 +114,7 @@ return {
     ft = "rust", -- just debugging with rust for now
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = "BufReadPost",
     config = function()
       require("plugins.configs.null-ls")
