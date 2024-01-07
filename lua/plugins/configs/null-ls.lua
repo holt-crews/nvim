@@ -57,6 +57,9 @@ local lSsources = {
   --     return { "--python-executable", virtual .. "/bin/python3" }
   --   end,
   -- }),
+  null_ls.builtins.diagnostics.shellcheck.with({ filetypes = { "sh", "zsh" } }),
+  null_ls.builtins.formatting.shfmt.with({ filetypes = { "sh", "zsh" } }),
+  null_ls.builtins.diagnostics.yamllint,
 
   null_ls.builtins.formatting.gofumpt,
   null_ls.builtins.formatting.goimports_reviser,
