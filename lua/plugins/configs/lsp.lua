@@ -196,6 +196,12 @@ local default_config = {
   on_attach = on_attach,
 }
 
+require("typescript-tools").setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_dir = util.root_pattern(".git"), -- might not be necessary
+})
+
 mason_lspconfig.setup_handlers({
   function(server_name)
     -- this merges "default_config" and the custom config for the server
