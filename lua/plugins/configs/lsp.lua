@@ -104,33 +104,33 @@ local servers = {
       },
     },
   },
-  pyright = {
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticSeverityOverrides = {
-            reportUnusedVariable = "warning", -- or anything
-            reportImportCycles = "warning",
-            reportUnknownMemberType = "warning",
-            reportUnknownLambdaType = "warning",
-            reportUnknownArgumentType = "warning",
-            reportUnknownParameterType = "warning",
-            reportUnknownVariableType = "warning",
-            reportMissingTypeArgument = "warning",
-            -- reportGeneralTypeIssues = "warning",
-          },
-          typeCheckingMode = "strict", -- use mypy
-        },
-      },
-    },
-    capabilities = (function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
-      return capabilities
-    end)(),
-  },
+  -- pyright = {
+  --   settings = {
+  --     python = {
+  --       analysis = {
+  --         autoSearchPaths = true,
+  --         useLibraryCodeForTypes = true,
+  --         diagnosticSeverityOverrides = {
+  --           reportUnusedVariable = "warning", -- or anything
+  --           reportImportCycles = "warning",
+  --           reportUnknownMemberType = "warning",
+  --           reportUnknownLambdaType = "warning",
+  --           reportUnknownArgumentType = "warning",
+  --           reportUnknownParameterType = "warning",
+  --           reportUnknownVariableType = "warning",
+  --           reportMissingTypeArgument = "warning",
+  --           -- reportGeneralTypeIssues = "warning",
+  --         },
+  --         typeCheckingMode = "strict", -- use mypy
+  --       },
+  --     },
+  --   },
+  --   capabilities = (function()
+  --     local capabilities = vim.lsp.protocol.make_client_capabilities()
+  --     capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+  --     return capabilities
+  --   end)(),
+  -- },
   -- https://jdhao.github.io/2023/07/22/neovim-pylsp-setup/
   -- black formatting is not working with this for some reason
   -- pylsp = {
