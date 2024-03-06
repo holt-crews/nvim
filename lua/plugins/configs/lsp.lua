@@ -151,20 +151,9 @@ local servers = {
   --     -- pyls_isort = { enabled = true },
   --   },
   -- },
-  -- using typescript-tools.nvim instead
-  -- tsserver = {
-  --   on_attach = function(client, bufnr)
-  --     on_attach(client, bufnr)
-  --     client.server_capabilities.documentFormattingProvider = false
-  --   end,
-  --   root_dir = util.root_pattern(".git"),
-  --   init_options = {
-  --     preferences = {
-  --       disableSuggestions = true,
-  --     },
-  --   },
-  -- },
-
+  bashls = {
+    filetypes = { "sh", "zsh", "bash" }
+  },
   lua_ls = {
     settings = {
       Lua = {
@@ -204,12 +193,7 @@ local default_config = {
 }
 
 require("typescript-tools").setup({
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    -- null-ls will handle this
-    -- client.server_capabilities.documentFormattingProvider = false
-    -- client.server_capabilities.documentRangeFormattingProvider = false
-  end,
+  on_attach = on_attach,
   capabilities = capabilities,
   root_dir = util.root_pattern(".git"), -- might not be necessary
 })
