@@ -3,8 +3,7 @@ local wk = require("which-key")
 local oil = require("oil")
 
 wk.register({
-  ["<leader>pv"] = { oil.open, "Open Netrw" },
-  ["-"] = { oil.open_float, "Open Float Netrw" },
+  ["-"] = { oil.open, "Open Float Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
 })
 
@@ -31,6 +30,7 @@ wk.register({
     b = { "<cmd>Telescope buffers<CR>", "[f]ind [b]uffer" },
     o = { "<cmd>Telescope oldfiles<CR>", "[f]ind [o]ldfiles" },
     c = { "<cmd>Telescope treesitter<CR>", "[f]ind [c]ode" },
+    t = { "<cmd>TodoTelescope<CR>", "[f]ind [t]odo"}
   },
   ["<leader>g"] = {
     name = "+file",
@@ -43,9 +43,6 @@ wk.register({
   },
 })
 
--- TODO: figure out vim fugitive (Git)
--- vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
-
 -- vim tmux navigator
 wk.register({
   ["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>" },
@@ -55,7 +52,6 @@ wk.register({
 })
 
 vim.keymap.set("n", "<Cr>", "o<Esc>")
--- vim.keymap.set('n', '<S-Cr>', 'O<Esc>')
 
 -- formatting
 wk.register({
@@ -77,6 +73,7 @@ wk.register({
     l = { "<cmd>TroubleToggle loclist<CR>", "[x]Trouble [l]oclist" },
     q = { "<cmd>TroubleToggle quickfix<CR>", "[x]Trouble [q]uickfix" },
     r = { "<cmd>TroubleRefresh<CR>", "[x]Trouble [r]efresh" },
+    t = { "<cmd>TodoQuickFix<CR>", "[x]Trouble [t]odo" },
   },
   ["g"] = {
     name = "+file",

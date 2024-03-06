@@ -2,8 +2,8 @@ return {
   "tpope/vim-sleuth",
   { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPost" },
   -- { "tpope/vim-fugitive",                      cmd = { "G", "Git" } },
-  { "tpope/vim-surround", event = "BufReadPost" },
-  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "tpope/vim-surround",                      event = "BufReadPost" },
+  { "folke/which-key.nvim",                    keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   {
     "folke/trouble.nvim",
     opts = { icons = false },
@@ -124,5 +124,21 @@ return {
   {
     "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerAttachToBuffer",
+  },
+  {
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      colors = {
+        -- can reference these in the cmp.lua file
+        error = { "LspDiagnosticsSignError", "ErrorMsg", "#DC2626" },
+        warning = { "LspDiagnosticsSignWarn", "WarningMsg", "#FBBF24" },
+        info = { "LspDiagnosticsSignInformation", "#2563EB" },
+        hint = { "LspDiagnosticsSignHint", "#10B981" },
+        default = { "Identifier", "#7C3AED" },
+        test = { "Identifier", "#FF00FF" }
+      },
+    },
   },
 }
