@@ -64,12 +64,6 @@ return {
     },
   },
   {
-    "folke/todo-comments.nvim",
-    event = "VimEnter",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = { signs = false },
-  },
-  {
     "rust-lang/rust.vim",
     ft = "rust",
     dependencies = "neovim/nvim-lspconfig",
