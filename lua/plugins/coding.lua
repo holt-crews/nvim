@@ -15,10 +15,10 @@ return {
       "williamboman/mason-lspconfig.nvim",
 
       -- Useful status updates for LSP
-      { "j-hui/fidget.nvim", opts = {} }, -- tag = "legacy",
+      { "j-hui/fidget.nvim",       opts = {} }, -- tag = "legacy",
 
       -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim", opts = {} },
+      { "folke/neodev.nvim",       opts = {} },
       {
         "windwp/nvim-autopairs",
         opts = {
@@ -39,7 +39,7 @@ return {
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("plugins.configs.cmp")
     end,
@@ -56,10 +56,18 @@ return {
       -- Adds completion for commands
       "hrsh7th/cmp-cmdline",
 
+      "hrsh7th/cmp-path",
+
       -- Adds a number of user-friendly snippets
       "rafamadriz/friendly-snippets",
       "onsails/lspkind.nvim",
     },
+  },
+  {
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = { signs = false },
   },
   {
     "rust-lang/rust.vim",

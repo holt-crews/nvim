@@ -168,7 +168,14 @@ local servers = {
   lua_ls = {
     settings = {
       Lua = {
-        workspace = { checkThirdParty = false },
+        runtime = { version = "LuaJIT" },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            "${3rd}/luv/library",
+            unpack(vim.api.nvim_get_runtime_file("", true)),
+          },
+        },
         telemetry = { enable = false },
         completion = {
           callSnippet = "Replace",
@@ -200,8 +207,8 @@ require("typescript-tools").setup({
   on_attach = function(client, bufnr)
     on_attach(client, bufnr)
     -- null-ls will handle this
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
+    -- client.server_capabilities.documentFormattingProvider = false
+    -- client.server_capabilities.documentRangeFormattingProvider = false
   end,
   capabilities = capabilities,
   root_dir = util.root_pattern(".git"), -- might not be necessary

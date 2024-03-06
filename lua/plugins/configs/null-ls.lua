@@ -1,11 +1,4 @@
--- https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
-local eslint_root_files = { ".eslintrc", ".eslintrc.js", ".eslintrc.json" }
-local prettier_root_files = { ".prettierrc", ".prettierrc.js", ".prettierrc.json" }
-local root_has_file = function(files)
-  return function(utils)
-    return utils.root_has_file(files)
-  end
-end
+-- some eslint and prettier stuff: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
 
 -- Here is the formatting config
 local null_ls = require("null-ls")
@@ -25,18 +18,6 @@ local lSsources = {
       "txt",
     },
   }),
-  null_ls.builtins.formatting.eslint_d.with({
-    filetypes = {
-      "javascript",
-      "typescript",
-    },
-    -- ensures that eslint_d is only used as formatter when no prettier config is setup
-    condition = function(utils)
-      local has_eslint = root_has_file(eslint_root_files)(utils)
-      local has_prettier = root_has_file(prettier_root_files)(utils)
-      return has_eslint and not has_prettier
-    end,
-  }),
 
   null_ls.builtins.formatting.stylua.with({
     filetypes = {
@@ -45,19 +26,14 @@ local lSsources = {
     args = { "--indent-width", "2", "--indent-type", "Spaces", "-" },
   }),
 
-  -- might require some additional setup/installation: https://github.com/disrupted/blackd-client
-  -- null_ls.builtins.formatting.blackd.with({
-  --   filetypes = {
-  --     "python",
-  --   },
-  -- }),
   -- null_ls.builtins.diagnostics.mypy.with({
   --   extra_args = function()
   --     local virtual = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX") or "/usr"
   --     return { "--python-executable", virtual .. "/bin/python3" }
   --   end,
   -- }),
-  null_ls.builtins.diagnostics.shellcheck.with({ filetypes = { "sh", "zsh" } }),
+  -- Deprecated by none-ls
+  -- null_ls.builtins.diagnostics.shellcheck.with({ filetypes = { "sh", "zsh" } }),
   null_ls.builtins.formatting.shfmt.with({ filetypes = { "sh", "zsh" } }),
   null_ls.builtins.diagnostics.yamllint,
 
