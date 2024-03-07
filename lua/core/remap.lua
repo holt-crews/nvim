@@ -2,6 +2,18 @@ local wk = require("which-key")
 
 local oil = require("oil")
 
+vim.api.nvim_create_user_command("Format", function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ["end"] = { args.line2, end_line:len() },
+    }
+  end
+  require("conform").format({ async = false, lsp_fallback = "always", range = range })
+end, { range = true })
+
 wk.register({
   ["-"] = { oil.open, "Open Float Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
@@ -30,7 +42,7 @@ wk.register({
     b = { "<cmd>Telescope buffers<CR>", "[f]ind [b]uffer" },
     o = { "<cmd>Telescope oldfiles<CR>", "[f]ind [o]ldfiles" },
     c = { "<cmd>Telescope treesitter<CR>", "[f]ind [c]ode" },
-    t = { "<cmd>TodoTelescope<CR>", "[f]ind [t]odo"}
+    t = { "<cmd>TodoTelescope<CR>", "[f]ind [t]odo" }
   },
   ["<leader>g"] = {
     name = "+file",
@@ -55,12 +67,7 @@ vim.keymap.set("n", "<Cr>", "o<Esc>")
 
 -- formatting
 wk.register({
-  ["<leader>fm"] = {
-    function()
-      vim.lsp.buf.format({ async = true })
-    end,
-    "[f]or[m]at",
-  },
+  ["<leader>fm"] = { "<cmd>Format<CR>", "[f]or[m]at" },
 })
 
 -- folke/trouble.nvim mappings
