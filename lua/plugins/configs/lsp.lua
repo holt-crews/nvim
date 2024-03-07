@@ -155,6 +155,10 @@ local servers = {
     filetypes = { "sh", "zsh", "bash" }
   },
   lua_ls = {
+    -- on_attach = function(client, bufnr)
+    --   on_attach(client, bufnr)
+    --   client.server_capabilities.documentFormattingProvider = false
+    -- end,
     settings = {
       Lua = {
         runtime = { version = "LuaJIT" },
@@ -197,6 +201,12 @@ require("typescript-tools").setup({
   capabilities = capabilities,
   root_dir = util.root_pattern(".git"), -- might not be necessary
 })
+
+require("rust-tools").setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
 
 mason_lspconfig.setup_handlers({
   function(server_name)

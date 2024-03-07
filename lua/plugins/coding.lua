@@ -72,17 +72,6 @@ return {
     end,
   },
   {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-    dependencies = "neovim/nvim-lspconfig",
-    opts = function()
-      return require("plugins.configs.rust-tools")
-    end,
-    config = function(_, opts)
-      require("rust-tools").setup(opts)
-    end,
-  },
-  {
     "saecki/crates.nvim",
     dependencies = "hrsh7th/nvim-cmp",
     ft = { "rust", "toml" },
@@ -93,18 +82,10 @@ return {
     end,
   },
   {
-    "olexsmir/gopher.nvim",
-    ft = "go",
-    config = function(_, opts)
-      require("gopher").setup(opts)
-    end,
-    build = function()
-      vim.cmd([[silent! GoInstallDeps]])
-    end,
-    requires = { -- dependencies
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
+    "simrat39/rust-tools.nvim",
+    ft = "rust",
+    dependencies = "neovim/nvim-lspconfig",
+    opts = {},
   },
   {
     "pmizio/typescript-tools.nvim",
@@ -113,14 +94,43 @@ return {
     ft = "typescript",
   },
   {
+    "olexsmir/gopher.nvim",
+    ft = "go",
+    config = function(_, opts)
+      require("gopher").setup(opts)
+    end,
+    build = function()
+      vim.cmd([[silent! GoInstallDeps]])
+    end,
+    -- dependencies
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+  {
     "mfussenegger/nvim-dap",
     ft = "rust", -- just debugging with rust for now
   },
   {
-    "nvimtools/none-ls.nvim",
-    event = "BufReadPost",
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require("plugins.configs.null-ls")
+      require("plugins.configs.linting")
     end,
   },
+  {
+    'stevearc/conform.nvim',
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      notify_on_error = true,
+      formatters_by_ft = {
+        -- lua = { 'stylua' },
+        go = { "goimports-reviser", "gofumpt", "golines" },
+        markdown = { "prettierd" },
+        json = { "prettierd" },
+        yaml = { "prettierd" }
+      },
+    },
+  }
 }

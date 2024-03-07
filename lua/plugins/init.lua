@@ -137,7 +137,7 @@ return {
         info = { "LspDiagnosticsSignInformation", "#2563EB" },
         hint = { "LspDiagnosticsSignHint", "#10B981" },
         default = { "Identifier", "#7C3AED" },
-        test = { "Identifier", "#FF00FF" }
+        test = { "Identifier", "#FF00FF" },
       },
     },
   },
