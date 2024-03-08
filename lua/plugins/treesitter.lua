@@ -35,6 +35,9 @@ return {
       "tsx",
       "typescript",
       "vim",
+      "vimdoc",
+      "rust",
+      "go",
       "yaml",
     },
     incremental_selection = {

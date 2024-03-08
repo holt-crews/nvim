@@ -15,10 +15,10 @@ return {
       "williamboman/mason-lspconfig.nvim",
 
       -- Useful status updates for LSP
-      { "j-hui/fidget.nvim",       opts = {} }, -- tag = "legacy",
+      { "j-hui/fidget.nvim",       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim",       opts = {} },
+      "folke/neodev.nvim",
       {
         "windwp/nvim-autopairs",
         opts = {
@@ -137,7 +137,6 @@ return {
     opts = {
       notify_on_error = true,
       formatters_by_ft = {
-        -- lua = { 'stylua' },
         go = { "goimports-reviser", "gofumpt", "golines" },
         markdown = { "prettierd" },
         json = { "prettierd" },

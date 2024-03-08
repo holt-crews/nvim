@@ -1,3 +1,6 @@
+-- Setup neovim lua configuration
+require("neodev").setup()
+
 local mason_lspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
 local util = require("lspconfig/util")
@@ -54,7 +57,6 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
   gopls = {
     cmd = { "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -70,10 +72,6 @@ local servers = {
     },
   },
   ruff_lsp = {
-    -- on_attach = function(client, bufnr)
-    --   on_attach(client, bufnr)
-    --   client.server_capabilities.hoverProvider = false
-    -- end,
     init_options = {
       settings = {
         -- args = { "--ignore F405,E402" }, -- "--ignore-noqa" }, -- allows for sys.path before import and for * imports
@@ -155,10 +153,6 @@ local servers = {
     filetypes = { "sh", "zsh", "bash" }
   },
   lua_ls = {
-    -- on_attach = function(client, bufnr)
-    --   on_attach(client, bufnr)
-    --   client.server_capabilities.documentFormattingProvider = false
-    -- end,
     settings = {
       Lua = {
         runtime = { version = "LuaJIT" },
@@ -178,15 +172,11 @@ local servers = {
   },
 }
 
--- Setup neovim lua configuration
-require("neodev").setup({})
-
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
-
 mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
 })
