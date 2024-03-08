@@ -70,6 +70,10 @@ return {
     init = function()
       vim.g.rustfmt_autosave = 1
     end,
+    config = function(_, _)
+      local config = require("plugins.configs.lsp")
+      require("rust-tools").setup(config)
+    end
   },
   {
     "saecki/crates.nvim",
@@ -90,8 +94,16 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
     ft = "typescript",
+    config = function(_, _)
+      local util = require("lspconfig/util")
+      local config = require("plugins.configs.lsp")
+      require("typescript-tools").setup({
+        on_attach = config["on_attach"],
+        capabilities = config["capabilities"],
+        root_dir = util.root_pattern(".git")
+      })
+    end,
   },
   {
     "olexsmir/gopher.nvim",
