@@ -29,12 +29,13 @@ wk.register({
   ["<C-p>"] = { "<cmd>bp<CR>", "Previous Buffer" },
   ["<leader>dd"] = { "<cmd>bd<CR>", "Delete Buffer" },
   ["<leader>bd"] = { '<cmd> %bdelete|edit #|normal `" <CR>', "[b]uffer [d]elete all" },
+  ["<leader>bb"] = { '<cmd>b#<CR>', "[b]ack [b]uffer" },
 })
 
 -- Telescope mapppings
 wk.register({
   ["<leader>f"] = {
-    name = "+file",
+    name = "Telescope",
     f = { "<cmd>Telescope find_files<CR>", "[f]ind [f]ile" },
     a = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "[f]ind [a]ll files" },
     g = { "<cmd>Telescope git_files<CR>", "[f]ind [g]it Files" },
@@ -42,15 +43,24 @@ wk.register({
     b = { "<cmd>Telescope buffers<CR>", "[f]ind [b]uffer" },
     o = { "<cmd>Telescope oldfiles<CR>", "[f]ind [o]ldfiles" },
     c = { "<cmd>Telescope treesitter<CR>", "[f]ind [c]ode" },
-    t = { "<cmd>TodoTelescope<CR>", "[f]ind [t]odo" }
+    t = { "<cmd>TodoTelescope<CR>", "[f]ind [t]odo" },
+    j = { "<cmd>Telescope jumplist<CR>", "[f]ind [j]ump" },
+    x = { "<cmd>Telescope commands<CR>", "[f]ind [x]command" },
+    r = { "<cmd>Telescope registers<CR>", "[f]ind [r]egisters" },
+    s = { "<cmd>Telescope spell_suggest<CR>", "[f]ind [s]pelling" },
+    k = { "<cmd>Telescope keymaps<CR>", "[f]ind normal mode [k]eymaps" },
+    z = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "[f]ind current buffer fu[z]zy" },
+    h = { "<cmd>Telescope harpoon marks<CR>", "[f]ind [h]arpoon marks" }
   },
   ["<leader>g"] = {
-    name = "+file",
+    name = "Git Telescope",
     s = { "<cmd>Telescope git_status<CR>", "[g]it [s]tatus" },
+    t = { "<cmd>Telescope git_stash<CR>", "[g]it s[t]ash" },
     c = { "<cmd> Telescope git_commits<CR>", "[g]it [c]ommits" },
+    b = { "<cmd> Telescope git_branches<CR>", "[g]it [b]ranches" },
   },
   ["<leader>h"] = {
-    name = "+file",
+    name = "Help Telescope",
     t = { "<cmd>Telescope help_tags<CR>", "[h]elp [t]ags" },
   },
 })
@@ -73,7 +83,7 @@ wk.register({
 -- folke/trouble.nvim mappings
 wk.register({
   ["<leader>x"] = {
-    name = "+file",
+    name = "Trouble",
     x = { "<cmd>TroubleToggle<CR>", "Open Trouble" },
     w = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "[x]Trouble [w]orkspace diagnostics" },
     d = { "<cmd>TroubleToggle document_diagnostics<CR>", "[x]Trouble [d]ocument diagnostics" },
@@ -83,8 +93,7 @@ wk.register({
     t = { "<cmd>TodoQuickFix<CR>", "[x]Trouble [t]odo" },
   },
   ["g"] = {
-    name = "+file",
-    R = { "<cmd>TroubleToggle lsp_references<CR>", "Trouble References" },
+    r = { "<cmd>TroubleToggle lsp_references<CR>", "Trouble References" },
   },
 })
 
@@ -97,29 +106,62 @@ wk.register({
   },
 })
 
-wk.register({
-  ["<leader>rcu"] = {
-    function()
-      require("crates").upgrade_all_crates()
-    end,
-    "[r]ust [c]rates [u]update",
-  },
-})
-
 -- debugger
 wk.register({
   ["<leader>d"] = {
+    name = "Debugger",
     b = {
       "<cmd> DapToggleBreakpoint <CR>",
       "[d]ebugger [b]reakpoint",
     },
-    us = {
+    B = {
       function()
-        local widgets = require("dap.ui.widgets")
-        local sidebar = widgets.sidebar(widgets.scopes)
-        sidebar.open()
+        require("dap").set_breakpoint(vim.fn.input("Breakpoint Condition: "))
       end,
-      "[d]ebugger sidebar",
+      "[d]ebugger conditional [B]reakpoint",
+    },
+    ui = {
+      function()
+        require("dapui").toggle()
+      end,
+      "[d]ebugger toggle [u]i"
+    },
+    uf = {
+      function()
+        ---@diagnostic disable-next-line: missing-parameter
+        require("dapui").float_element()
+      end,
+      "[d]ebugger [f]loat [u]i"
+    },
+    c = {
+      function()
+        require("dap").continue()
+      end,
+      "[d]ebugger [c]ontinue"
+    },
+    q = {
+      function()
+        require("dap").terminate()
+      end,
+      "[d]ebugger [q]uit"
+    },
+    i = {
+      function()
+        require("dap").step_into()
+      end,
+      "[d]ebugger step [i]nto"
+    },
+    v = {
+      function()
+        require("dap").step_over()
+      end,
+      "[d]ebugger step o[v]er"
+    },
+    o = {
+      function()
+        require("dap").step_out()
+      end,
+      "[d]ebugger step [o]ut"
     },
   },
 })
@@ -129,14 +171,4 @@ wk.register({
   ["<leader>g"] = {
     g = { "<cmd>below vert Git<CR>", "Open vim-fugitive" },
   },
-})
-
--- gopher.nvim
-wk.register({
-  ["<leader>gs"] = {
-    j = { "<cmd> GoTagAdd json <CR>", "Add [g]o [s]truct [j]son tags" },
-    y = { "<cmd> GoTagAdd yaml <CR>", "Add [g]o [s]truct [y]aml tags" },
-  },
-  ["<leader>gdc"] = { "<cmd> GoCmt <CR>", "Add [g]o [d]oc [c]omment" },
-  ["<leader>gif"] = { "<cmd> GoIfErr <CR>", "Add [g]o [if] err" },
 })

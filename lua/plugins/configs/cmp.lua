@@ -114,14 +114,3 @@ vim.diagnostic.config({
   update_in_insert = false, -- default to false
   severity_sort = true,     -- default to false
 })
-
--- add diagnostic symbols
-local function lspSymbol(name, icon)
-  vim.fn.sign_define("DiagnosticSign" .. name, { text = icon, texthl = "LspDiagnosticsSign" .. name })
-end
-lspSymbol("Error", "")
-lspSymbol("Information", "")
-lspSymbol("Hint", "󰌵")
-lspSymbol("Info", "")
-lspSymbol("Warning", "")
-lspSymbol("Warn", "")

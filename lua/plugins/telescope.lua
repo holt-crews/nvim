@@ -1,39 +1,12 @@
 return {
   {
-    "ThePrimeagen/harpoon",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    opts = {
-      global_settings = {
-        mark_branch = true,
-      },
-    },
-    config = function()
-      local mark = require("harpoon.mark")
-      local ui = require("harpoon.ui")
-
-      local wk = require("which-key")
-      wk.register({
-        ["<leader>"] = {
-          a = { mark.add_file, "Mark File (harpoon)" },
-          r = { mark.rm_file, "Remove File (harpoon)" },
-          R = { mark.clear_all, "Remove All Files (harpoon)" },
-        },
-        ["<C-e>"] = { ui.toggle_quick_menu, "Toggle Quick Menu (harpoon)" },
-        ["<C-i>"] = {
-          function()
-            ui.nav_next()
-          end,
-          "Navigate next mark (harpoon)",
-        },
-      })
-    end,
-  },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", event = "VeryLazy" },
-  {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
-    event = "VeryLazy",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make", event = "VeryLazy" }
+    },
+    event = "VimEnter",
     module = "telescope",
     opts = {
       defaults = {

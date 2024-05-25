@@ -14,3 +14,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
     lint.try_lint()
   end,
 })
+
+-- add diagnostic symbols
+local function lspSymbol(name, icon)
+  vim.fn.sign_define("DiagnosticSign" .. name, { text = icon, texthl = "LspDiagnosticsSign" .. name })
+end
+lspSymbol("Error", "")
+lspSymbol("Information", "")
+lspSymbol("Hint", "󰌵")
+lspSymbol("Info", "")
+lspSymbol("Warning", "")
+lspSymbol("Warn", "")

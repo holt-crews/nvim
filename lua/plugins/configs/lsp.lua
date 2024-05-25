@@ -1,5 +1,7 @@
 -- Setup neovim lua configuration
-require("neodev").setup()
+require("neodev").setup({
+  library = { plugins = { "nvim-dap-ui" }, types = true },
+})
 
 local mason_lspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
@@ -59,15 +61,29 @@ end
 local servers = {
   gopls = {
     cmd = { "gopls" },
-    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl", "gotpl" },
     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-    settings = {
+    settings = { -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
       gopls = {
+        templateExtensions = { "gotmpl", "gotpl", "tpl" },
         completeUnimported = true,
-        usePlaceholders = true,
         analyses = {
           unusedparams = true,
+          fieldalignment = true,
+          shadow = true,
+          unusedvariable = true,
         },
+        staticcheck = true,
+        -- inlayHints aren't available in neovim until v0.10.0
+        hints = {
+          assignVariableTypes = true,
+          constantValues = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+          functionTypeParameters = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true
+        }
       },
     },
   },
