@@ -35,21 +35,22 @@ return {
         current_frame = "",
         expanded = ""
       },
-      layouts = { {
-        elements = { {
-          id = "breakpoints",
-          size = 0.33
-        }, {
-          id = "stacks",
-          size = 0.33
-        }, {
-          id = "watches",
-          size = 0.33
-        }
-        },
-        position = "left",
-        size = 20
-      },
+      layouts = {
+        -- {
+        --   elements = { {
+        --     id = "breakpoints",
+        --     size = 0.33
+        --   }, {
+        --     id = "stacks",
+        --     size = 0.33
+        --   }, {
+        --     id = "watches",
+        --     size = 0.33
+        --   }
+        --   },
+        --   position = "left",
+        --   size = 20
+        -- },
         {
           elements = { {
             id = "scopes",
@@ -69,21 +70,12 @@ return {
       },
       render = {
         indent = 1,
-        max_value_lines = 100
+        max_value_lines = 100,
       }
     },
     config = function(_, opts)
       require("dapui").setup(opts)
       require("plugins.configs.dapui")
-    end
-  },
-  {
-    "theHamsta/nvim-dap-virtual-text",
-    event = "VeryLazy",
-    dependencies =
-    { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
-    config = function(_, opts)
-      require("nvim-dap-virtual-text").setup(opts)
     end
   },
   {

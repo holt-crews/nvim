@@ -46,12 +46,20 @@ local on_attach = function(_, bufnr)
   nmap("<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, "[W]orkspace [L]ist Folders")
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-    vim.lsp.buf.format()
-  end, { desc = "Format current buffer with LSP" })
 end
+
+-- Create a command `:Format` local to the LSP buffer
+vim.api.nvim_create_user_command("Format", function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ["end"] = { args.line2, end_line:len() },
+    }
+  end
+  require("conform").format({ async = false, lsp_fallback = "always", range = range })
+end, { range = true, desc = "Format current buffer with Conform" })
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -59,6 +67,7 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
+  marksman = {},
   gopls = {
     cmd = { "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl", "gotpl" },
@@ -166,7 +175,8 @@ local servers = {
   --   },
   -- },
   bashls = {
-    filetypes = { "sh", "zsh", "bash" }
+    filetypes = { "sh", "zsh", "bash" },
+    root_dir = util.root_pattern(".git", ".bashrc", ".zshrc"),
   },
   lua_ls = {
     settings = {

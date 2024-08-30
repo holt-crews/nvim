@@ -13,5 +13,5 @@ dap.listeners.before.event_exited.dapui_config = function()
 end
 
 -- NOTE: these are actually a part of nvim-dap, but because it's part of the ui, I'm leaving it in dapui.lua
-vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'red', linehl = '', numhl = 'red' })
+vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'red', linehl = '', numhl = 'red' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '', texthl = 'yellow', linehl = '', numhl = 'yellow' })

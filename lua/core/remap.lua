@@ -2,18 +2,6 @@ local wk = require("which-key")
 
 local oil = require("oil")
 
-vim.api.nvim_create_user_command("Format", function(args)
-  local range = nil
-  if args.count ~= -1 then
-    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
-    range = {
-      start = { args.line1, 0 },
-      ["end"] = { args.line2, end_line:len() },
-    }
-  end
-  require("conform").format({ async = false, lsp_fallback = "always", range = range })
-end, { range = true })
-
 wk.register({
   ["-"] = { oil.open, "Open Float Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
@@ -52,13 +40,6 @@ wk.register({
     z = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "[f]ind current buffer fu[z]zy" },
     h = { "<cmd>Telescope harpoon marks<CR>", "[f]ind [h]arpoon marks" }
   },
-  ["<leader>g"] = {
-    name = "Git Telescope",
-    s = { "<cmd>Telescope git_status<CR>", "[g]it [s]tatus" },
-    t = { "<cmd>Telescope git_stash<CR>", "[g]it s[t]ash" },
-    c = { "<cmd> Telescope git_commits<CR>", "[g]it [c]ommits" },
-    b = { "<cmd> Telescope git_branches<CR>", "[g]it [b]ranches" },
-  },
   ["<leader>h"] = {
     name = "Help Telescope",
     t = { "<cmd>Telescope help_tags<CR>", "[h]elp [t]ags" },
@@ -84,91 +65,56 @@ wk.register({
 wk.register({
   ["<leader>x"] = {
     name = "Trouble",
-    x = { "<cmd>TroubleToggle<CR>", "Open Trouble" },
-    w = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "[x]Trouble [w]orkspace diagnostics" },
-    d = { "<cmd>TroubleToggle document_diagnostics<CR>", "[x]Trouble [d]ocument diagnostics" },
-    l = { "<cmd>TroubleToggle loclist<CR>", "[x]Trouble [l]oclist" },
-    q = { "<cmd>TroubleToggle quickfix<CR>", "[x]Trouble [q]uickfix" },
+    x = { "<cmd>Trouble diagnostics toggle<CR>", "Open Trouble" },
+    w = { "<cmd>Trouble workspace_diagnostics toggle<CR>", "[x]Trouble [w]orkspace diagnostics" },
+    d = { "<cmd>Trouble document_diagnostics toggle<CR>", "[x]Trouble [d]ocument diagnostics" },
+    l = { "<cmd>Trouble loclist toggle<CR>", "[x]Trouble [l]oclist" },
+    q = { "<cmd>Trouble quickfix toggle<CR>", "[x]Trouble [q]uickfix" },
     r = { "<cmd>TroubleRefresh<CR>", "[x]Trouble [r]efresh" },
     t = { "<cmd>TodoQuickFix<CR>", "[x]Trouble [t]odo" },
   },
   ["g"] = {
-    r = { "<cmd>TroubleToggle lsp_references<CR>", "Trouble References" },
+    r = { "<cmd>Trouble lsp toggle focus=true<CR>", "Trouble References" },
   },
 })
 
 wk.register({
-  ["[c"] = {
-    function()
-      require("treesitter-context").go_to_context()
-    end,
-    "jump to [c]ontext",
-  },
+  ["[c"] = { function() require("treesitter-context").go_to_context() end, "jump to [c]ontext" },
 })
 
 -- debugger
 wk.register({
   ["<leader>d"] = {
     name = "Debugger",
-    b = {
-      "<cmd> DapToggleBreakpoint <CR>",
-      "[d]ebugger [b]reakpoint",
-    },
-    B = {
-      function()
-        require("dap").set_breakpoint(vim.fn.input("Breakpoint Condition: "))
-      end,
-      "[d]ebugger conditional [B]reakpoint",
-    },
-    ui = {
-      function()
-        require("dapui").toggle()
-      end,
-      "[d]ebugger toggle [u]i"
-    },
-    uf = {
-      function()
-        ---@diagnostic disable-next-line: missing-parameter
-        require("dapui").float_element()
-      end,
-      "[d]ebugger [f]loat [u]i"
-    },
-    c = {
-      function()
-        require("dap").continue()
-      end,
-      "[d]ebugger [c]ontinue"
-    },
-    q = {
-      function()
-        require("dap").terminate()
-      end,
-      "[d]ebugger [q]uit"
-    },
-    i = {
-      function()
-        require("dap").step_into()
-      end,
-      "[d]ebugger step [i]nto"
-    },
-    v = {
-      function()
-        require("dap").step_over()
-      end,
-      "[d]ebugger step o[v]er"
-    },
-    o = {
-      function()
-        require("dap").step_out()
-      end,
-      "[d]ebugger step [o]ut"
-    },
+    b = { "<cmd> DapToggleBreakpoint <CR>", "[d]ebugger [b]reakpoint" },
+    B = { function() require("dap").set_breakpoint(vim.fn.input("Breakpoint Condition: ")) end, "[d]ebugger conditional [B]reakpoint", },
+    ui = { function() require("dapui").toggle() end, "[d]ebugger toggle [u]i" },
+    ---@diagnostic disable-next-line: missing-parameter
+    uf = { function() require("dapui").float_element() end, "[d]ebugger [f]loat [u]i" },
+    c = { function() require("dap").continue() end, "[d]ebugger [c]ontinue" },
+    q = { function() require("dap").terminate() end, "[d]ebugger [q]uit" },
+    i = { function() require("dap").step_into() end, "[d]ebugger step [i]nto" },
+    v = { function() require("dap").step_over() end, "[d]ebugger step o[v]er" },
+    o = { function() require("dap").step_out() end, "[d]ebugger step [o]ut" },
   },
 })
 
--- fugitive
+-- git fugitive
 wk.register({
   ["<leader>g"] = {
-    g = { "<cmd>below vert Git<CR>", "Open vim-fugitive" },
+    name = "+Git",
+    t = {
+      name = "+Telescope",
+      s = { "<cmd>Telescope git_status<CR>", "[g]it [s]tatus" },
+      t = { "<cmd>Telescope git_stash<CR>", "[g]it s[t]ash" },
+      c = { "<cmd> Telescope git_commits<CR>", "[g]it [c]ommits" },
+      b = { "<cmd> Telescope git_branches<CR>", "[g]it [b]ranches" },
+    },
+    f = { "<cmd>below vert Git<CR>", "Open vim-fugitive" },
   },
+})
+
+-- undotree
+wk.register({
+  ["<C-U>"] = { "<cmd>UndotreeToggle<CR>", "[u]ndotree" },
 })

@@ -66,6 +66,10 @@ return {
             icon = "",
             name = "Yaml"
           },
+          make = {
+            icon = "",
+            name = "Makefile"
+          },
         }
       })
       require("oil").setup({
@@ -90,16 +94,21 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = {
-          { "branch", fmt = trunc_git_branch() },
-          "diff",
+          {
+            "branch",
+            fmt = trunc_git_branch(),
+            on_click = function() vim.cmd("Telescope git_branches") end,
+          },
+          {
+            "diff",
+            on_click = function() vim.cmd("Gitsigns toggle_linehl") end,
+          },
           {
             "diagnostics",
-            on_click = function()
-              vim.cmd("TroubleToggle document_diagnostics")
-            end,
+            on_click = function() vim.cmd("Trouble document_diagnostics toggle") end,
           },
         },
-        lualine_c = { { "buffers", icons_enabled = false, fmt = trunc_buf_name() } },
+        lualine_c = { { "buffers", icons_enabled = false, max_length = 10000, fmt = trunc_buf_name() } },
         lualine_x = { "fileformat" },
         lualine_y = { { "filetype", icons_enabled = false } },
         lualine_z = { "location" },
@@ -116,8 +125,18 @@ return {
         delete = { text = "󰍵" },
         topdelete = { text = "‾" },
         changedelete = { text = "~" },
-        untracked = { text = "│" },
+        untracked = { text = "┆" },
       },
+      signs_staged = {
+        add = { text = "│" },
+        change = { text = "│" },
+        delete = { text = "󰍵" },
+        topdelete = { text = "‾" },
+        changedelete = { text = "~" },
+        untracked = { text = "┆" },
+      },
+      signs_staged_enable = true,
+      numhl = true,
       on_attach = function(bufnr)
         vim.keymap.set(
           "n",

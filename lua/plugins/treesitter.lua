@@ -125,17 +125,6 @@ return {
           end
         end
       end
-
-      -- I think I just manually did this with the queries/ and ftdetect/ directories
-      -- local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
-      -- parser_config.gotmpl = {
-      --   install_info = {
-      --     url = "https://github.com/ngalaiko/tree-sitter-go-template",
-      --     files = { "src/parser.c" }
-      --   },
-      --   filetype = { "gotmpl", "gotpl" },
-      --   used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl" }
-      -- }
     end,
   },
 }

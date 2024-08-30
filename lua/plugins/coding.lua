@@ -136,32 +136,6 @@ return {
     end,
   },
   {
-    "olexsmir/gopher.nvim",
-    ft = "go",
-    config = function(_, opts)
-      require("gopher").setup(opts)
-
-      local wk = require("which-key")
-      -- gopher.nvim
-      wk.register({
-        ["<leader>gs"] = {
-          j = { "<cmd> GoTagAdd json <CR>", "Add [g]o [s]truct [j]son tags" },
-          y = { "<cmd> GoTagAdd yaml <CR>", "Add [g]o [s]truct [y]aml tags" },
-        },
-        ["<leader>gdc"] = { "<cmd> GoCmt <CR>", "Add [g]o [d]oc [c]omment" },
-        ["<leader>gif"] = { "<cmd> GoIfErr <CR>", "Add [g]o [if] err" },
-      })
-    end,
-    build = function()
-      vim.cmd([[silent! GoInstallDeps]])
-    end,
-    -- dependencies
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-  },
-  {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -174,11 +148,13 @@ return {
     opts = {
       notify_on_error = true,
       formatters_by_ft = {
-        go = { "goimports-reviser", "gofumpt", "golines" },
-        markdown = { "prettierd" },
+        go = { "goimports-reviser", "gofumpt", --[[ "golines" ]] },
+        markdown = { "deno_fmt", "injected" },
+        sh = { "shfmt" },
         json = { "prettierd" },
         yaml = { "prettierd" },
       },
     },
-  }
+  },
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 }

@@ -1,12 +1,26 @@
 return {
   "tpope/vim-sleuth",
   "tpope/vim-fugitive",
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+  },
   { "tpope/vim-surround",   event = "BufReadPost" },
-  { "folke/which-key.nvim", keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/which-key.nvim", version = "2",        keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
   {
     "folke/trouble.nvim",
-    opts = { icons = false },
-    cmd = { "Trouble", "TroubleToggle" },
+    opts = {},
+    cmd = { "Trouble" },
+  },
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    opts = {},
   },
   {
     "christoomey/vim-tmux-navigator",
@@ -35,6 +49,21 @@ return {
       },
       search = {
         pattern = [[\b(KEYWORDS)]],
+      },
+      keywords = {
+        FIX = {
+          icon = " ", -- icon used for the sign, and in search results
+          color = "error", -- can be a hex color, or a named color (see below)
+          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+          -- signs = false, -- configure signs for some keywords individually
+        },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        FUTURE = { icon = " ", color = "warning" },
       }
     },
   },
@@ -72,50 +101,6 @@ return {
           "Navigate previous mark (harpoon)",
         },
       })
-    end,
-  },
-  {
-    "ThePrimeagen/refactoring.nvim",
-    ft = {
-      "go",
-      "python",
-      "typescript",
-      "javascript"
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("refactoring").setup()
-
-      local wk = require("which-key")
-      wk.register({ ["<leader>r"] = { name = "refactoring.nvim" } })
-      wk.register({
-        ["<leader>r"] = {
-          e = { "<cmd> Refactor extract <CR>", "[r]efactor [e]xtract" },
-          f = { "<cmd> Refactor extract_to_file <CR>", "[r]efactor extract to [f]ile" },
-          v = { "<cmd> Refactor extract_var <CR>", "[r]efactor extract [v]ariable" },
-          i = { "<cmd> Refactor inline_var<CR>", "[r]efactor [i]nline variable" },
-          I = { "<cmd> Refactor infline_func<CR>", "[r]efactor [I]nline func" },
-          b = { "<cmd> Refactor extract_block<CR>", "[r]efactor [b]lock" },
-          bf = { "<cmd> Refactor extract_block_to_file<CR>", "[r]efactor [b]lock to [f]ile" },
-        },
-      }, { mode = "x" })
-
-      wk.register({
-        ["<leader>r"] = {
-          i = { "<cmd> Refactor inline_var <CR>", "[r]efactor [i]nline variable" },
-        },
-      }, { mode = { "x", "n" } })
-
-      wk.register({
-        ["<leader>r"] = {
-          I = { "<cmd> Refactor infline_func <CR>", "[r]efactor [I]nline func" },
-          b = { "<cmd> Refactor extract_block <CR>", "[r]efactor [b]lock" },
-          bf = { "<cmd> Refactor extract_block_to_file <CR>", "[r]efactor [b]lock to [f]ile" },
-        },
-      }, { mode = { "n" } })
     end,
   },
 }
