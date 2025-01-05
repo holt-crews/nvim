@@ -1,9 +1,7 @@
 local wk = require("which-key")
 
-local oil = require("oil")
-
 wk.register({
-  ["-"] = { oil.open, "Open Float Netrw" },
+  ["-"] = { require("oil").open, "Open Float Netrw" },
   ["<leader>hh"] = { ":lua vim.diagnostic.open_float()<CR>", "Diagnostic [hh]elp" },
 })
 
@@ -117,4 +115,15 @@ wk.register({
 -- undotree
 wk.register({
   ["<C-U>"] = { "<cmd>UndotreeToggle<CR>", "[u]ndotree" },
+})
+
+
+wk.register({
+  ["<leader>cc"] = { function()
+    local input = vim.fn.input("Quick Chat: ")
+    if input ~= "" then
+      require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+    end
+  end, "Open [c]opilot [c]hat"
+  }
 })

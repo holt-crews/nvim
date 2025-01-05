@@ -1,6 +1,4 @@
 return {
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
@@ -9,15 +7,9 @@ return {
       require("plugins.configs.lsp")
     end,
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
+      "saghen/blink.cmp",
       { "williamboman/mason.nvim", config = true },
-      "williamboman/mason-lspconfig.nvim",
-
-      -- Useful status updates for LSP
-      { "j-hui/fidget.nvim",       opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      "folke/neodev.nvim",
+      { "j-hui/fidget.nvim",       opts = {} }
     },
   },
   {
@@ -27,62 +19,42 @@ return {
       fast_wrap = {},
       disable_filetype = { "TelescopePrompt", "vim" },
     },
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-
-      -- setup cmp for autopairs
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
   },
   {
-    -- Autocompletion
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    config = function()
-      require("plugins.configs.cmp")
-    end,
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      {
-        'L3MON4D3/LuaSnip',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          {
-            'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-          },
-        },
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      }
+    }
+  },
+  {
+    "saghen/blink.cmp",
+    event = "BufReadPost",
+    dependencies = "rafamadriz/friendly-snippets",
+    version = "*",
+    opts = {
+      keymap = { preset = "default" },
+      appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = "mono",
       },
-      "saadparwaiz1/cmp_luasnip",
-
-      -- Adds LSP completion capabilities
-      "hrsh7th/cmp-nvim-lsp",
-
-      -- Adds completion for buffers
-      -- "hrsh7th/cmp-buffer",
-
-      -- Adds completion for commands
-      "hrsh7th/cmp-cmdline",
-
-      "hrsh7th/cmp-path",
-
-      -- adds little icons to snippets
-      "onsails/lspkind.nvim",
+      sources = {
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions a priority
+            score_offset = 100,
+          }
+        }
+      },
+      -- experimental signature help support
+      signature = { enabled = true },
     },
+    opts_extend = { "sources.default" }
   },
   {
     "rust-lang/rust.vim",
@@ -136,6 +108,14 @@ return {
     end,
   },
   {
+    "maxandron/goplements.nvim",
+    ft = "go",
+    opts = {
+      display_package = true,
+      highlight = "GoImplements",
+    }
+  },
+  {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -148,13 +128,37 @@ return {
     opts = {
       notify_on_error = true,
       formatters_by_ft = {
-        go = { "goimports-reviser", "gofumpt", --[[ "golines" ]] },
+        go = { "goimports" },
         markdown = { "deno_fmt", "injected" },
         sh = { "shfmt" },
-        json = { "prettierd" },
+        json = { "jq" },
         yaml = { "prettierd" },
+        graphql = { "prettierd" },
       },
+      formatters = {
+        prettierd = {
+          ft_parsers = {
+            yaml = "yaml",
+            graphql = "graphql",
+          }
+        }
+      }
     },
+    config = function(_, opts)
+      require("conform").setup(opts)
+      require("conform").formatters.jq = { prepend_args = { "--tab" } }
+
+      vim.api.nvim_create_user_command("Format", function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = {
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+          }
+        end
+        require("conform").format({ async = false, lsp_fallback = "always", range = range })
+      end, { range = true, desc = "Format current buffer with Conform" })
+    end,
   },
-  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 }

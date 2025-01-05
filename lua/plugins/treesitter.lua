@@ -98,6 +98,11 @@ return {
       matchup = { enable = true },
     },
     config = function(_, opts)
+      -- enable folding on treesitter expressions
+      vim.wo.foldmethod = 'expr'
+      vim.wo.foldlevel = 20
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
       if type(opts.ensure_installed) == "table" then
         ---@type table<string, boolean>
         local added = {}
@@ -125,6 +130,15 @@ return {
           end
         end
       end
+
+      local go_group = vim.api.nvim_create_augroup("CustomGo", {})
+      vim.api.nvim_create_autocmd({ "BufEnter" }, {
+        group = go_group,
+        pattern = "*.go",
+        callback = function()
+          require("plugins.custom.go").highlight_go_comments()
+        end,
+      })
     end,
   },
 }

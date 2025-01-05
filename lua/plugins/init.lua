@@ -1,4 +1,10 @@
 return {
+  "AndrewRadev/splitjoin.vim",
+  {
+    "chentoast/marks.nvim",
+    event = "BufReadPost",
+    opts = {}
+  },
   "tpope/vim-sleuth",
   "tpope/vim-fugitive",
   {
@@ -68,39 +74,50 @@ return {
     },
   },
   {
-    "ThePrimeagen/harpoon",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    opts = {
-      global_settings = {
-        mark_branch = true,
-      },
-    },
+    "github/copilot.vim",
+    cmd = { "Copilot" },
     config = function()
-      local mark = require("harpoon.mark")
-      local hui = require("harpoon.ui")
-
       local wk = require("which-key")
       wk.register({
-        ["<leader>"] = {
-          a = { mark.add_file, "Mark File (harpoon)" },
-          r = { mark.rm_file, "Remove File (harpoon)" },
-          R = { mark.clear_all, "Remove All Files (harpoon)" },
-        },
-        ["<C-e>"] = { hui.toggle_quick_menu, "Toggle Quick Menu (harpoon)" },
-        ["<C-b>"] = {
-          function()
-            hui.nav_next()
-          end,
-          "Navigate next mark (harpoon)",
-        },
-        ["<C-y>"] = {
-          function()
-            hui.nav_prev()
-          end,
-          "Navigate previous mark (harpoon)",
-        },
+        ["<leader>cp"] = {
+          name = "copilot",
+          s = { "<cmd> Copilot setup <CR>", "[C]o[p]ilot [s]etup" },
+          e = { "<cmd> Copilot enable <CR>", "[C]o[p]ilot [e]nable" },
+          d = { "<cmd> Copilot disable <CR>", "[C]o[p]ilot [d]isable" },
+        }
       })
+      vim.keymap.set("i", "<C-R>", 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false
+      })
+      vim.g.copilot_no_tab_map = true
     end,
   },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    cmd = { "CopilotChat" },
+    branch = "main",
+    dependencies = {
+      "github/copilot.vim",
+      "nvim-lua/plenary.nvim",
+    },
+    build = "Make tiktoken",
+    opts = {
+      mappings = {
+        complete = {
+          insert = '<Tab>',
+        },
+        reset = {
+          normal = '<C-x>',
+          insert = '<C-x>',
+        },
+        show_info = {
+          normal = 'gp',
+        },
+        show_context = {
+          normal = 'gs',
+        },
+      },
+    }
+  }
 }
