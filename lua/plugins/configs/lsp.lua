@@ -1,3 +1,4 @@
+local M = {}
 -- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -47,12 +48,12 @@ local servers = {
       gopls = {
         templateExtensions = { "gotmpl", "gotpl", "tpl" },
         completeUnimported = true,
-        analyses = {
-          unusedparams = true,
-          fieldalignment = true,
-          shadow = true,
-          unusedvariable = true,
-        },
+        -- analyses = {
+        --   unusedparams = true,
+        --   fieldalignment = true,
+        --   shadow = true,
+        --   unusedvariable = true,
+        -- },
         staticcheck = true,
         hints = {
           assignVariableTypes = true,
@@ -140,3 +141,7 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
 })
+
+M.on_attach = on_attach
+
+return M

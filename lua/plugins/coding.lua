@@ -102,7 +102,7 @@ return {
       local config = require("plugins.configs.lsp")
       require("typescript-tools").setup({
         on_attach = config["on_attach"],
-        capabilities = config["capabilities"],
+        -- capabilities = config["capabilities"],
         root_dir = util.root_pattern(".git")
       })
     end,
@@ -117,7 +117,7 @@ return {
   },
   {
     "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
+    events = { "BufWritePost", "BufReadPost", "InsertLeave" },
     config = function()
       require("plugins.configs.linting")
     end,
@@ -128,7 +128,7 @@ return {
     opts = {
       notify_on_error = true,
       formatters_by_ft = {
-        go = { "goimports" },
+        go = { "gci" },
         markdown = { "deno_fmt", "injected" },
         sh = { "shfmt" },
         json = { "jq" },
