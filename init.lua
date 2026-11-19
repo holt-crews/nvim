@@ -12,7 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-vim.lsp.enable({"gopls", "luals", "bashls", "ruff", "basedpyright", --[["marksman",]] "typescriptls", "graphqlls", --[["rustanalyzer"]]})
+vim.lsp.enable({"gopls", "luals", "bashls", "ruff", "basedpyright", --[["marksman",]] "typescript", "graphqlls", --[["rustanalyzer"]]})
 
 require("lazy").setup("plugins")
 require("core")
