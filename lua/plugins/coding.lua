@@ -1,17 +1,68 @@
-return {
-  {
-    -- LSP Configuration & Plugins
-    "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    config = function()
-      require("plugins.configs.lsp")
-    end,
-    dependencies = {
-      "saghen/blink.cmp",
-      { "williamboman/mason.nvim", config = true },
-      { "j-hui/fidget.nvim",       opts = {} }
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client ~= nil then
+      client.capabilities = require('blink.cmp').get_lsp_capabilities(client.capabilities)
+    end
+
+    local nmap = function(keys, func, desc)
+      if desc then
+        desc = "LSP: " .. desc
+      end
+
+      vim.keymap.set("n", keys, func, { buffer = ev.buf, desc = desc })
+    end
+
+    nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+    nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+
+    nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+    nmap("<leader>gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+    nmap("<leader>gi", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations")
+    nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+    nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+    nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+    nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
+    nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+
+    -- NOTE: conflicts with tmux navigator
+    -- nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+
+    -- Lesser used LSP functionality
+    nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+    nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
+    nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+    nmap("<leader>wl", function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, "[W]orkspace [L]ist Folders")
+  end,
+})
+
+vim.diagnostic.config({
+  underline = true,
+  virtual_text = true,
+  update_in_insert = false, -- default to false
+  severity_sort = true,     -- default to false
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '󰌵',
     },
-  },
+    linehl = {},
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+      [vim.diagnostic.severity.INFO] = 'InfoMsg',
+      [vim.diagnostic.severity.HINT] = 'HintMsg',
+    },
+  }
+})
+
+return {
+  { "j-hui/fidget.nvim", event = "VeryLazy", opts = {} },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
@@ -26,84 +77,69 @@ return {
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-      }
-    }
+      },
+    },
   },
   {
-    "saghen/blink.cmp",
+    'saghen/blink.cmp',
     event = "BufReadPost",
-    dependencies = "rafamadriz/friendly-snippets",
-    version = "*",
+    dependencies = 'rafamadriz/friendly-snippets',
+    version = '*',
     opts = {
-      keymap = { preset = "default" },
+      keymap = { preset = 'default' },
       appearance = {
         use_nvim_cmp_as_default = true,
-        nerd_font_variant = "mono",
+        nerd_font_variant = 'mono'
       },
       sources = {
+        -- add lazydev to your completion providers
         default = { "lazydev", "lsp", "path", "snippets", "buffer" },
         providers = {
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
-            -- make lazydev completions a priority
+            -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
-          }
-        }
+          },
+        },
       },
       -- experimental signature help support
-      signature = { enabled = true },
+      signature = { enabled = true }
     },
     opts_extend = { "sources.default" }
   },
   {
-    "rust-lang/rust.vim",
-    ft = "rust",
-    dependencies = "neovim/nvim-lspconfig",
-    init = function()
-      vim.g.rustfmt_autosave = 1
-    end,
-    config = function(_, _)
-      local config = require("plugins.configs.lsp")
-      require("rust-tools").setup(config)
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local lint = require("lint")
 
-      require("which-key").register({
-        ["<leader>rcu"] = {
-          function()
-            require("crates").upgrade_all_crates()
-          end,
-          "[r]ust [c]rates [u]update",
-        },
-      })
-    end
-  },
-  {
-    "saecki/crates.nvim",
-    dependencies = "hrsh7th/nvim-cmp",
-    ft = { "rust", "toml" },
-    config = function(_, opts)
-      local crates = require("crates")
-      crates.setup(opts)
-      crates.show()
-    end,
-  },
-  {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-    dependencies = "neovim/nvim-lspconfig",
-    opts = {},
-  },
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    ft = "typescript",
-    config = function(_, _)
-      local util = require("lspconfig/util")
-      local config = require("plugins.configs.lsp")
-      require("typescript-tools").setup({
-        on_attach = config["on_attach"],
-        -- capabilities = config["capabilities"],
-        root_dir = util.root_pattern(".git")
+      -- Show linters for the current buffer's file type
+      vim.api.nvim_create_user_command("LintInfo", function()
+        local filetype = vim.bo.filetype
+        local linters = require("lint").linters_by_ft[filetype]
+
+        if linters then
+          print("Linters for " .. filetype .. ": " .. table.concat(linters, ", "))
+        else
+          print("No linters configured for filetype: " .. filetype)
+        end
+      end, {})
+
+
+      -- add linters here
+      lint.linters_by_ft = {
+        -- go = { "golangcilint" },
+        yaml = { "yamllint" },
+        dockerfile = { "hadolint" },
+        -- json = { "jsonlint" }
+      }
+
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+        group = vim.api.nvim_create_augroup("lint", { clear = true }),
+        callback = function()
+          lint.try_lint()
+        end,
       })
     end,
   },
@@ -112,15 +148,8 @@ return {
     ft = "go",
     opts = {
       display_package = true,
-      highlight = "GoImplements",
-    }
-  },
-  {
-    "mfussenegger/nvim-lint",
-    events = { "BufWritePost", "BufReadPost", "InsertLeave" },
-    config = function()
-      require("plugins.configs.linting")
-    end,
+      highlight = "GoImplements"
+    },
   },
   {
     'stevearc/conform.nvim',
@@ -140,7 +169,10 @@ return {
           ft_parsers = {
             yaml = "yaml",
             graphql = "graphql",
-          }
+          },
+        },
+        gci = {
+          args = { "write", "$FILENAME", "-s", "standard", "-s", "default", "-s", "localmodule" }
         }
       }
     },
