@@ -161,6 +161,7 @@ return {
         markdown = { "deno_fmt", "injected" },
         sh = { "shfmt" },
         json = { "jq" },
+        jsonc = { "jq" },
         yaml = { "prettierd" },
         graphql = { "prettierd" },
       },
