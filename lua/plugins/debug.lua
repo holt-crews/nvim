@@ -133,24 +133,6 @@ return {
     },
     config = function(_, opts)
       require("dap-go").setup(opts)
-      local wk = require("which-key")
-
-      wk.register({
-        ["<leader>d"] = {
-          gt = {
-            function()
-              require('dap-go').debug_test()
-            end,
-            "[d]ebug [g]o [t]est"
-          },
-          gl = {
-            function()
-              require('dap-go').debug_last()
-            end,
-            "[d]ebug [g]o [l]ast test"
-          }
-        },
-      })
     end
   },
 }

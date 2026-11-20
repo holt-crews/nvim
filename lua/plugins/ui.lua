@@ -37,11 +37,11 @@ return {
       vim.cmd([[colorscheme gruvbox-material]])
     end,
   },
-  { "stevearc/dressing.nvim", event = "VeryLazy" },
   {
-    "stevearc/oil.nvim",
+    "nvim-tree/nvim-web-devicons",
+    lazy = false,
     config = function()
-      require("nvim-web-devicons").set_default_icon("", "#d4be98", 65)
+      require("nvim-web-devicons").set_default_icon("", "#d4be98", 65)
       require("nvim-web-devicons").setup({
         color_icons = false,
         override = {
@@ -50,37 +50,54 @@ return {
             name = "Graphql"
           },
           mod = {
-            icon = "",
+            icon = "",
             name = "go.mod"
           },
           sum = {
-            icon = "",
+            icon = "",
             name = "go.sum"
           },
           yaml = {
-            icon = "",
+            icon = "",
             name = "Yaml"
           },
           yml = {
-            icon = "",
+            icon = "",
             name = "Yaml"
           },
           make = {
-            icon = "",
+            icon = "",
             name = "Makefile"
           },
         }
       })
-      require("oil").setup({
-        columns = {
-          { "icon", add_padding = false },
-        },
-        view_options = {
-          show_hidden = true,
-        },
-      })
     end,
+  },
+  {
+    "stevearc/oil.nvim",
+    lazy = false,
+    opts = {
+      default_file_explorer = true,
+      columns = {
+        { "icon", add_padding = false },
+      },
+      view_options = {
+        show_hidden = true,
+      },
+    },
     dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  {
+    "SmiteshP/nvim-navic",
+    lazy = false,
+    opts = {
+      highlight = true,
+      lsp = { auto_attach = true },
+    },
+    config = function(_, opts)
+      require("nvim-navic").setup(opts)
+      vim.o.winbar = "%{%v:lua.require'nvim-navic'.is_available() ? v:lua.require'nvim-navic'.get_location() : ''%}"
+    end,
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -104,7 +121,7 @@ return {
           },
           {
             "diagnostics",
-            on_click = function() vim.cmd("Trouble document_diagnostics toggle") end,
+            on_click = function() vim.cmd("Trouble diagnostics toggle filter.buf=0") end,
           },
         },
         lualine_c = { { "buffers", icons_enabled = false, max_length = 10000, fmt = trunc_buf_name() } },
@@ -150,20 +167,6 @@ return {
         remove_blankline_trail = true,
       },
       scope = { enabled = true },
-    },
-  },
-  {
-    "numToStr/Comment.nvim",
-    event = "BufReadPost",
-    opts = {
-      toggler = {
-        line = "<leader>/",
-        block = "<leader>bc",
-      },
-      opleader = {
-        line = "<leader>/",
-        block = "<leader>bc",
-      },
     },
   },
 }

@@ -1,35 +1,17 @@
 return {
-  { "RRethy/vim-illuminate",     event = "BufReadPost" },
-  { "romainl/vim-cool",          event = "BufReadPost" },
   { "AndrewRadev/splitjoin.vim", event = "BufReadPost" }, -- gS and gJ are the keymaps
   {
     "chentoast/marks.nvim",
     event = "VeryLazy",
     opts = {},
   },
-  { "tpope/vim-sleuth",     ft = { "lua" } }, -- can't get this to be disabled for bogie
   "tpope/vim-fugitive",
-  {
-    "mbbill/undotree",
-    cmd = "UndotreeToggle",
-  },
   { "tpope/vim-surround",   event = "BufReadPost" },
-  { "folke/which-key.nvim", version = "2",        keys = { "<leader>", '"', "`", "c", "v", "g" }, opts = {} },
+  { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
   {
     "folke/trouble.nvim",
     opts = {},
     cmd = { "Trouble" },
-  },
-  {
-    "utilyre/barbecue.nvim",
-    name = "barbecue",
-    event = "VeryLazy",
-    version = "*",
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- optional dependency
-    },
-    opts = {},
   },
   {
     "christoomey/vim-tmux-navigator",
@@ -41,6 +23,9 @@ return {
   },
   {
     "folke/todo-comments.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TodoTelescope", "TodoTrouble", "TodoQuickFix", "TodoLocList" },
     dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
   },
 }

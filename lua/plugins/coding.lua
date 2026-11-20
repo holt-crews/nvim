@@ -1,9 +1,6 @@
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client ~= nil then
-      client.capabilities = require('blink.cmp').get_lsp_capabilities(client.capabilities)
-    end
 
     local nmap = function(keys, func, desc)
       if desc then
@@ -16,15 +13,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
     nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-    nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-    nmap("<leader>gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-    nmap("<leader>gi", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementations")
+    nmap("gd", function() require("telescope.builtin").lsp_definitions() end, "[G]oto [D]efinition")
+    nmap("<leader>gr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
+    nmap("<leader>gi", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementations")
     nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
     nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-    nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-    nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-
-    nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+    nmap("<leader>ls", function() require("telescope.builtin").lsp_document_symbols() end, "[L]ist [S]ymbols")
+    nmap("<leader>ws", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,
+      "[W]orkspace [S]ymbols")
 
     -- NOTE: conflicts with tmux navigator
     -- nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
@@ -36,6 +32,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
     nmap("<leader>wl", function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, "[W]orkspace [L]ist Folders")
+
+    if client and client:supports_method("textDocument/documentHighlight") then
+      local group = vim.api.nvim_create_augroup("lsp_highlight_" .. ev.buf, { clear = true })
+      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        group = group,
+        buffer = ev.buf,
+        callback = vim.lsp.buf.document_highlight,
+      })
+      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+        group = group,
+        buffer = ev.buf,
+        callback = vim.lsp.buf.clear_references,
+      })
+    end
   end,
 })
 
@@ -55,8 +65,8 @@ vim.diagnostic.config({
     numhl = {
       [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
       [vim.diagnostic.severity.WARN] = 'WarningMsg',
-      [vim.diagnostic.severity.INFO] = 'InfoMsg',
-      [vim.diagnostic.severity.HINT] = 'HintMsg',
+      [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+      [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
     },
   }
 })
@@ -88,7 +98,6 @@ return {
     opts = {
       keymap = { preset = 'default' },
       appearance = {
-        use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono'
       },
       sources = {
@@ -110,7 +119,8 @@ return {
   },
   {
     "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
+    ft = { "yaml", "dockerfile" },
+    cmd = "LintInfo",
     config = function()
       local lint = require("lint")
 
@@ -141,6 +151,7 @@ return {
           lint.try_lint()
         end,
       })
+      lint.try_lint()
     end,
   },
   {
@@ -153,7 +164,7 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    event = { "BufReadPost", "BufNewFile" },
+    cmd = "Format",
     opts = {
       notify_on_error = true,
       formatters_by_ft = {

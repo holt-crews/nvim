@@ -49,7 +49,7 @@ return {
 
         local has_indent_query = vim.treesitter.query.get(language, "indents") ~= nil
 
-        if has_indent_query then vim.bo.indentexpr = "v:lua.reuqire'nvim-treesitter'.indentexpr()" end
+        if has_indent_query then vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
       end
 
       local available_parsers = require('nvim-treesitter').get_available()
@@ -80,7 +80,7 @@ return {
       {
         "af",
         function()
-          require("nvim-treesitter-textobject.select").select_textobject("@function.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
         end,
         desc = "Select outer function",
         mode = { "x", "o"}
@@ -88,7 +88,7 @@ return {
       {
         "if",
         function()
-          require("nvim-treesitter-textobject.select").select_textobject("@function.inner", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
         end,
         desc = "Select inner function",
         mode = { "x", "o"}
@@ -96,7 +96,7 @@ return {
       {
         "ac",
         function()
-          require("nvim-treesitter-textobject.select").select_textobject("@class.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
         end,
         desc = "Select outer class",
         mode = { "x", "o"}
@@ -104,7 +104,7 @@ return {
       {
         "ic",
         function()
-          require("nvim-treesitter-textobject.select").select_textobject("@class.inner", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
         end,
         desc = "Select inner class",
         mode = { "x", "o"}
@@ -112,7 +112,7 @@ return {
       {
         "as",
         function()
-          require("nvim-treesitter-textobject.select").select_textobject("@local.scope", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "textobjects")
         end,
         desc = "Select local scope",
         mode = { "x", "o"}

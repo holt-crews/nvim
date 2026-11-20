@@ -44,9 +44,11 @@ local get_root = function(bufnr)
   return vim.treesitter.get_parser(bufnr, "go", {}):parse()[1]:root()
 end
 
+local ns = vim.api.nvim_create_namespace("go_comments")
+
 local get_start_end = function(node, text, word)
   local line, start_col, _, _ = node:range()
-  local word_start_col = string.find(text, word) - 1
+  local word_start_col = string.find(text, word, 1, true) - 1
   local word_end_col = word_start_col + #word
   return line, start_col + word_start_col, start_col + word_end_col
 end
@@ -87,7 +89,7 @@ local highlight_godeprecated = function(changes, bufnr, node)
         hl_group = "GoDeprecated",
         line = line,
         col_start = 0,
-        col_end = -1,
+        col_end = #vim.api.nvim_buf_get_lines(bufnr, line, line + 1, true)[1],
       })
     end
   end
@@ -128,10 +130,25 @@ M.highlight_go_comments = function(bufnr)
     end
   end
 
+  vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
   for _, change in ipairs(changes) do
-    vim.api.nvim_buf_add_highlight(bufnr, 0, change.hl_group, change.line, change.col_start, change.col_end)
+    vim.api.nvim_buf_set_extmark(bufnr, ns, change.line, change.col_start, {
+      end_col = change.col_end,
+      hl_group = change.hl_group,
+    })
   end
 end
 
+M.setup = function()
+  local group = vim.api.nvim_create_augroup("go_comments", { clear = true })
+  vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "TextChanged", "InsertLeave" }, {
+    group = group,
+    callback = function(ev)
+      if vim.bo[ev.buf].filetype == "go" then
+        pcall(M.highlight_go_comments, ev.buf)
+      end
+    end,
+  })
+end
 
 return M

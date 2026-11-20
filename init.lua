@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -12,7 +12,14 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-vim.lsp.enable({"gopls", "luals", "bashls", "ruff", "basedpyright", --[["marksman",]] "typescript", "graphqlls", --[["rustanalyzer"]]})
+vim.lsp.enable({ "gopls", "lua_ls", "bashls", "ruff", "basedpyright", --[["marksman",]] "typescript", --[["rustanalyzer"]] })
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+  performance = {
+    rtp = {
+      disabled_plugins = { "gzip", "tarPlugin", "zipPlugin" },
+    },
+  },
+  change_detection = { notify = false },
+})
 require("core")
